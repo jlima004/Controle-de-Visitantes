@@ -22,9 +22,5 @@ public class Visitante  extends Pessoa{
 	public void setSexo(String sexo) {
 		this.sexo = sexo;
 	}
-	
-	
-	
-	
 
 }

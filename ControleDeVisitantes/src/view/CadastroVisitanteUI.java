@@ -23,6 +23,8 @@ import dao.VisitanteDAO;
 import model.Visitante;
 
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 import java.awt.event.ActionEvent;
 
 public class CadastroVisitanteUI extends JDialog {
@@ -30,7 +32,8 @@ public class CadastroVisitanteUI extends JDialog {
 	private JTextField txtfEmail;
 	private JTextField txtfTelefone;
 	private JTextField txtfBairro;
-	private JTextField txtfSexo;
+	private JComboBox<String> cbSexo;
+	
 
 	/**
 	 * Launch the application.
@@ -78,10 +81,13 @@ public class CadastroVisitanteUI extends JDialog {
 		txtfBairro = new JTextField();
 		txtfBairro.setColumns(10);
 		
-		JLabel lblSexo = new JLabel("Sexo");
+		JLabel lblSexo = new JLabel();
 		
-		txtfSexo = new JTextField();
-		txtfSexo.setColumns(10);
+		JComboBox<String> cbSexo = new JComboBox<String>();
+		cbSexo.addItem("Selecione");
+		cbSexo.addItem("Masculino");
+		cbSexo.addItem("Feminino");
+		
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
@@ -100,15 +106,16 @@ public class CadastroVisitanteUI extends JDialog {
 							.addComponent(lblBairro)))
 					.addGap(10)
 					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-						.addComponent(txtfEmail, GroupLayout.PREFERRED_SIZE, 322, GroupLayout.PREFERRED_SIZE)
 						.addComponent(txtfNomeVisitante, GroupLayout.PREFERRED_SIZE, 357, GroupLayout.PREFERRED_SIZE)
 						.addComponent(txtfBairro, GroupLayout.PREFERRED_SIZE, 294, GroupLayout.PREFERRED_SIZE)
-						.addGroup(gl_panel.createSequentialGroup()
-							.addComponent(txtfTelefone, GroupLayout.PREFERRED_SIZE, 167, GroupLayout.PREFERRED_SIZE)
-							.addGap(9)
-							.addComponent(lblSexo)
-							.addGap(10)
-							.addComponent(txtfSexo, GroupLayout.PREFERRED_SIZE, 97, GroupLayout.PREFERRED_SIZE)))
+						.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING, false)
+							.addGroup(gl_panel.createSequentialGroup()
+								.addComponent(txtfTelefone, GroupLayout.PREFERRED_SIZE, 167, GroupLayout.PREFERRED_SIZE)
+								.addGap(9)
+								.addComponent(lblSexo)
+								.addGap(18)
+								.addComponent(cbSexo, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+							.addComponent(txtfEmail, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 322, GroupLayout.PREFERRED_SIZE)))
 					.addGap(7))
 		);
 		gl_panel.setVerticalGroup(
@@ -134,10 +141,9 @@ public class CadastroVisitanteUI extends JDialog {
 								.addComponent(txtfTelefone, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
 						.addGroup(gl_panel.createSequentialGroup()
 							.addGap(14)
-							.addComponent(lblSexo))
-						.addGroup(gl_panel.createSequentialGroup()
-							.addGap(11)
-							.addComponent(txtfSexo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+							.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+								.addComponent(lblSexo)
+								.addComponent(cbSexo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
 					.addGap(19))
 		);
 		panel.setLayout(gl_panel);
@@ -145,11 +151,12 @@ public class CadastroVisitanteUI extends JDialog {
 		JButton btnCadastrar = new JButton("Cadastrar");
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				System.out.println(cbSexo.getSelectedItem().toString().charAt(0));
 				Visitante visitante = new Visitante();
 				visitante.setNome(txtfNomeVisitante.getText());
 				visitante.setEmail(txtfEmail.getText());
 				visitante.setBairro(txtfBairro.getText());
-				visitante.setSexo(txtfSexo.getText());
+				visitante.setSexo(String.valueOf(cbSexo.getSelectedItem().toString().charAt(0)));
 				visitante.setTelefone(txtfTelefone.getText());
 				
 				new VisitanteController().salvar(visitante);
