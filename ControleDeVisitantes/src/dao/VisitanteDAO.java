@@ -14,10 +14,8 @@ import utill.ConnectionUtil;
 public class VisitanteDAO {
 
 	public static VisitanteDAO instancia;
-	public ArrayList<Visitante> listaVisitantes = new ArrayList<>();
-	private Connection com = ConnectionUtil.getConnection();// chama o metodo de
-															// coneccao com o
-															// banco
+	public ArrayList<Visitante> listaVisitantes;
+	private Connection com = ConnectionUtil.getConnection();
 
 	public static VisitanteDAO instanciaSingleton() {
 		if (instancia == null) {
@@ -45,6 +43,7 @@ public class VisitanteDAO {
 
 	public List<Visitante> listarVisitantes() {
 		try {
+			listaVisitantes = new ArrayList<>();
 			Statement state = com.createStatement();
 			String comandoSql = "SELECT * FROM visitante";
 			ResultSet res = state.executeQuery(comandoSql);
@@ -68,6 +67,29 @@ public class VisitanteDAO {
 		return listaVisitantes;
 	}
 
+	public void editar(Visitante visitante) {
+		try {
+			String comandoSql = "UPDATE visitante SET "
+					+ "nomeVisitante = ?, "
+					+ "sexo = ?,"
+					+ "telefone = ?,"
+					+ "bairro = ?,"
+					+ "email = ?"
+					+ "WHERE idvisitante = ?";
+			PreparedStatement prest = com.prepareStatement(comandoSql);
+			prest.setString(1, visitante.getNome());
+			prest.setString(2, visitante.getSexo());
+			prest.setString(3, visitante.getTelefone());
+			prest.setString(4, visitante.getBairro());
+			prest.setString(5, visitante.getEmail());
+			prest.setInt(6, visitante.getId());
+			
+			prest.execute();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
 	public void excluir(int id) {
 		try {
 			String comandoSql = "DELETE FROM visitante WHERE idvisitante = ?";
@@ -75,6 +97,7 @@ public class VisitanteDAO {
 			prest.setInt(1, id);
 
 			prest.execute();
+			listarVisitantes();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

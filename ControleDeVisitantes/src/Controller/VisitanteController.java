@@ -15,6 +15,10 @@ public class VisitanteController {
 		return VisitanteDAO.instanciaSingleton().listarVisitantes();
 	}
 
+	public void editar(Visitante visitante) {
+		VisitanteDAO.instanciaSingleton().editar(visitante);
+	}
+
 	public void remover(Visitante visitante) {
 		VisitanteDAO.instanciaSingleton().excluir(visitante.getId());
 	}

@@ -32,7 +32,8 @@ public class CadastroVisitanteUI extends JDialog {
 	private JTextField txtfEmail;
 	private JTextField txtfTelefone;
 	private JTextField txtfBairro;
-	private JComboBox<String> cbSexo;
+	private JComboBox<String> cbSexo = new JComboBox<String>();
+	private Visitante visitanteParaEdicao;
 	
 
 	/**
@@ -83,10 +84,9 @@ public class CadastroVisitanteUI extends JDialog {
 		
 		JLabel lblSexo = new JLabel();
 		
-		JComboBox<String> cbSexo = new JComboBox<String>();
-		cbSexo.addItem("Selecione");
-		cbSexo.addItem("Masculino");
-		cbSexo.addItem("Feminino");
+		cbSexo.setModel(new DefaultComboBoxModel(new String[] {"Selecione", "Masculino", "Feminino"}));
+		
+		
 		
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
@@ -151,16 +151,32 @@ public class CadastroVisitanteUI extends JDialog {
 		JButton btnCadastrar = new JButton("Cadastrar");
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				System.out.println(cbSexo.getSelectedItem().toString().charAt(0));
-				Visitante visitante = new Visitante();
-				visitante.setNome(txtfNomeVisitante.getText());
-				visitante.setEmail(txtfEmail.getText());
-				visitante.setBairro(txtfBairro.getText());
-				visitante.setSexo(String.valueOf(cbSexo.getSelectedItem().toString().charAt(0)));
-				visitante.setTelefone(txtfTelefone.getText());
+				if(visitanteParaEdicao == null) {
+					System.out.println(cbSexo.getSelectedItem().toString().charAt(0));
+					Visitante visitante = new Visitante();
+					visitante.setNome(txtfNomeVisitante.getText());
+					visitante.setEmail(txtfEmail.getText());
+					visitante.setBairro(txtfBairro.getText());
+					visitante.setSexo(cbSexo.getSelectedItem().toString());
+					visitante.setTelefone(txtfTelefone.getText());
+					
+					new VisitanteController().salvar(visitante);
+					JOptionPane.showMessageDialog(null, "Cadastrado com Sucesso!!");
+					
+				} else {
+					
+					visitanteParaEdicao.setNome(txtfNomeVisitante.getText());
+					visitanteParaEdicao.setEmail(txtfEmail.getText());
+					visitanteParaEdicao.setBairro(txtfBairro.getText());
+					visitanteParaEdicao.setSexo(cbSexo.getSelectedItem().toString());
+					visitanteParaEdicao.setTelefone(txtfTelefone.getText());
+					
+					new VisitanteController().editar(visitanteParaEdicao);
+					
+					JOptionPane.showMessageDialog(null, "Visitante Editado com sucesso!!");
+					
+				}
 				
-				new VisitanteController().salvar(visitante);
-				JOptionPane.showMessageDialog(null, "Cadastrado com Sucesso!!");
 				dispose();
 				
 			}
@@ -188,4 +204,24 @@ public class CadastroVisitanteUI extends JDialog {
 		);
 		getContentPane().setLayout(groupLayout);
 	}
+	
+	public Visitante getVisitanteParaEdicao() {
+		return visitanteParaEdicao;
+	}
+	
+	public void setVisitanteParaEdicao(Visitante visitanteParaEdicao) {
+		this.visitanteParaEdicao = visitanteParaEdicao;
+		preencherCamposParaEdicao();
+	}
+	
+	public void preencherCamposParaEdicao() {
+		if (visitanteParaEdicao != null) {
+			txtfNomeVisitante.setText(visitanteParaEdicao.getNome());
+			txtfEmail.setText(visitanteParaEdicao.getEmail());
+			txtfBairro.setText(visitanteParaEdicao.getBairro());
+			txtfTelefone.setText(visitanteParaEdicao.getTelefone());
+			cbSexo.setSelectedItem(visitanteParaEdicao.getSexo());
+		}
+	}
+	
 }

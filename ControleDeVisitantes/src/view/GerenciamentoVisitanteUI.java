@@ -23,6 +23,8 @@ import javax.swing.border.TitledBorder;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.JLabel;
 
 public class GerenciamentoVisitanteUI extends JDialog {
 	private JTable table;
@@ -70,21 +72,83 @@ public class GerenciamentoVisitanteUI extends JDialog {
 				Visitante visitante = new VisitanteTableMode(VisitanteDAO.instanciaSingleton().listaVisitantes)
 						.get(linhaSelecionada);
 				new VisitanteController().remover(visitante);
+				table = new JTable();
+				VisitanteTableMode model = new VisitanteTableMode(new VisitanteController().listar());
+				table.setModel(model);
+				scrollPane.setViewportView(table);
 
-				JOptionPane.showMessageDialog(null, "Visitante excluido com  sucesso", "Exclusão de visitante",
+				JOptionPane.showMessageDialog(null, "Visitante excluido com  sucesso", "ExclusÃ£o de visitante",
 						JOptionPane.WARNING_MESSAGE);
 			}
 		});
+		
+		JButton btnNovo = new JButton("novo");
+		btnNovo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				CadastroVisitanteUI cadVisitante = new CadastroVisitanteUI();
+				cadVisitante.setLocationRelativeTo(null);
+				cadVisitante.setVisible(true);
+				
+			}
+		});
+		
+		JButton btnEditar = new JButton("Editar");
+		btnEditar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				int linhaSelecionada = table.getSelectedRow();
+				Visitante visitante = new VisitanteTableMode(
+						VisitanteDAO.instanciaSingleton().listaVisitantes
+						).get(linhaSelecionada);
+				CadastroVisitanteUI cadVisitante = new CadastroVisitanteUI();
+				cadVisitante.setVisitanteParaEdicao(visitante);
+				cadVisitante.setLocationRelativeTo(null);
+				cadVisitante.setVisible(true);
+				
+				
+			}
+		});
+		
+		JButton btnAtualizar = new JButton("Atualizar");
+		btnAtualizar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				table = new JTable();
+				VisitanteTableMode model = new VisitanteTableMode(new VisitanteController().listar());
+				table.setModel(model);
+				scrollPane.setViewportView(table);
+			}
+		});
 		GroupLayout gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup().addGap(5)
-						.addGroup(gl_panel.createParallelGroup(Alignment.LEADING).addComponent(btnExcluir)
-								.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 752, GroupLayout.PREFERRED_SIZE))
-						.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
-		gl_panel.setVerticalGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gl_panel.createSequentialGroup().addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 243, GroupLayout.PREFERRED_SIZE)
-						.addGap(18).addComponent(btnExcluir).addGap(99)));
+		gl_panel.setHorizontalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addGap(5)
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panel.createSequentialGroup()
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(btnNovo)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(btnEditar)
+							.addGap(7)
+							.addComponent(btnExcluir)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(btnAtualizar))
+						.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 752, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+		);
+		gl_panel.setVerticalGroup(
+			gl_panel.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 243, GroupLayout.PREFERRED_SIZE)
+					.addGap(18)
+					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(btnExcluir)
+						.addComponent(btnNovo)
+						.addComponent(btnEditar)
+						.addComponent(btnAtualizar))
+					.addGap(99))
+		);
 
 		table = new JTable();
 		VisitanteTableMode model = new VisitanteTableMode(new VisitanteController().listar());
@@ -92,5 +156,7 @@ public class GerenciamentoVisitanteUI extends JDialog {
 		scrollPane.setViewportView(table);
 		panel.setLayout(gl_panel);
 		getContentPane().setLayout(groupLayout);
+		
+		
 	}
 }
