@@ -48,7 +48,7 @@ public class GerenciamentoVisitanteUI extends JDialog {
 	public GerenciamentoVisitanteUI() {
 		setModal(true);
 		setTitle("Gerenciamento de Visitantes");
-		setBounds(100, 100, 807, 580);
+		setBounds(100, 100, 809, 580);
 
 		JPanel panel = new JPanel();
 		panel.setBorder(

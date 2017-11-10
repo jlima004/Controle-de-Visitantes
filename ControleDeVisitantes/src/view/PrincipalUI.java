@@ -28,6 +28,9 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JDesktopPane;
+import javax.swing.border.TitledBorder;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class PrincipalUI extends JFrame {
 	
@@ -60,71 +63,41 @@ public class PrincipalUI extends JFrame {
 		setTitle("Controle de Evento Senai");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 800, 570);
-		
-		
-		
-		JMenuBar menuBar = new JMenuBar();
-		setJMenuBar(menuBar);
-		
-		JMenu mnEvento = new JMenu("Evento");
-		mnEvento.setHorizontalAlignment(SwingConstants.CENTER);
-		menuBar.add(mnEvento);
-		
-		JMenuItem mntmNovoEvento = new JMenuItem("Novo Evento");
-		mntmNovoEvento.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				
-			}
-		});
-		mnEvento.add(mntmNovoEvento);
-		
-		JMenuItem mntmGerenciarEventos = new JMenuItem("Gerenciar Eventos");
-		mntmGerenciarEventos.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				
-				
-			 
-				
-				
-				
-			}
-		});
-		mnEvento.add(mntmGerenciarEventos);
-		
-		JMenu mnVisitante = new JMenu("Visitante");
-		menuBar.add(mnVisitante);
-		
-		JMenuItem mntmCadastrarVisitante = new JMenuItem("Novo Visitante");
-		mntmCadastrarVisitante.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				CadastroVisitanteUI cadVisitante = new CadastroVisitanteUI();
-				cadVisitante.setLocationRelativeTo(null);
-				cadVisitante.setVisible(true);
-				
-			}
-		});
-		mnVisitante.add(mntmCadastrarVisitante);
-		
-		JMenuItem mntmGerenciamentoVisitantes = new JMenuItem("Gerenciar Visitantes");
-		mntmGerenciamentoVisitantes.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				
-				GerenciamentoVisitanteUI gVisitante = new GerenciamentoVisitanteUI();
-				gVisitante.setLocationRelativeTo(null);
-				gVisitante.setVisible(true);
-				
-			
-			}
-		});
-		mnVisitante.add(mntmGerenciamentoVisitantes);
+		setBounds(100, 100, 800, 569);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setLocationRelativeTo(null);
 		setContentPane(contentPane);
 		
-		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon(PrincipalUI.class.getResource("/img/535620-10-06-23-48-SENAI_SC.jpg")));
+		JPanel panel = new JPanel();
+		
+		JLabel bntGerenciamentoEvento = new JLabel("");
+		bntGerenciamentoEvento.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				GerenciamentoEvento gEvento = new GerenciamentoEvento();
+				gEvento.setLocationRelativeTo(null);
+				gEvento.setVisible(true);
+				
+				
+				
+			}
+		});
+		bntGerenciamentoEvento.setIcon(new ImageIcon(PrincipalUI.class.getResource("/img/ev.jpg")));
+		
+		JLabel bntGerenciamentoVisitante = new JLabel("");
+		bntGerenciamentoVisitante.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				GerenciamentoVisitanteUI gVisitante = new GerenciamentoVisitanteUI();
+				gVisitante.setLocationRelativeTo(null);
+				gVisitante.setVisible(true);
+			}
+		});
+		bntGerenciamentoVisitante.setIcon(new ImageIcon(PrincipalUI.class.getResource("/img/Visitante-icon.png")));
+		
+		JLabel bntGerenciamentoPalestrante = new JLabel("");
+		bntGerenciamentoPalestrante.setIcon(new ImageIcon(PrincipalUI.class.getResource("/img/palestrantre-icon.png")));
 		
 		
 		
@@ -132,14 +105,40 @@ public class PrincipalUI extends JFrame {
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGap(0, 784, Short.MAX_VALUE)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 668, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addComponent(bntGerenciamentoEvento)
+						.addComponent(bntGerenciamentoVisitante, GroupLayout.PREFERRED_SIZE, 65, GroupLayout.PREFERRED_SIZE)
+						.addComponent(bntGerenciamentoPalestrante, GroupLayout.PREFERRED_SIZE, 65, GroupLayout.PREFERRED_SIZE))
+					.addGap(24))
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGap(0, 511, Short.MAX_VALUE)
+				.addComponent(panel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGap(119)
+					.addComponent(bntGerenciamentoEvento)
+					.addGap(18)
+					.addComponent(bntGerenciamentoVisitante, GroupLayout.PREFERRED_SIZE, 65, GroupLayout.PREFERRED_SIZE)
+					.addGap(18)
+					.addComponent(bntGerenciamentoPalestrante, GroupLayout.PREFERRED_SIZE, 65, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(182, Short.MAX_VALUE))
 		);
+		
+		JLabel lbFolder = new JLabel("");
+		lbFolder.setIcon(new ImageIcon(PrincipalUI.class.getResource("/img/Cartaz 2017 NOVO.jpg")));
+		GroupLayout gl_panel = new GroupLayout(panel);
+		gl_panel.setHorizontalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addComponent(lbFolder, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 668, Short.MAX_VALUE)
+		);
+		gl_panel.setVerticalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addComponent(lbFolder, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 532, Short.MAX_VALUE)
+		);
+		panel.setLayout(gl_panel);
 		contentPane.setLayout(gl_contentPane);
-		contentPane.setLayout(new BorderLayout(0, 0));
-		contentPane.add(lblNewLabel);
 	}
 }
