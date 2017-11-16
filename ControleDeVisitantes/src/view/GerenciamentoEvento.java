@@ -13,6 +13,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class GerenciamentoEvento extends JDialog {
 	private JTable table;
@@ -39,6 +41,13 @@ public class GerenciamentoEvento extends JDialog {
 		JPanel panel = new JPanel();
 		
 		JButton btnNewButton = new JButton("Novo");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				CadastroEventosUI cadEvento = new CadastroEventosUI();
+				cadEvento.setLocationRelativeTo(null);
+				cadEvento.setVisible(true);
+			}
+		});
 		
 		JButton btnEditar = new JButton("Editar");
 		
