@@ -7,9 +7,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Time;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.JOptionPane;
 
 import model.Evento;
 import utill.ConnectionUtil;
@@ -20,6 +23,11 @@ public class EventoDAO {
 	public static EventoDAO instancia;
 	public ArrayList<Evento> listaEventos;
 	private Connection con = ConnectionUtil.getConnection();
+	
+
+	
+	
+	
 	
 	
 	public static  EventoDAO instanciaSingleton(){
@@ -35,10 +43,10 @@ public class EventoDAO {
 			String comandoSql = "INSERT INTO  evento(nomeevento,datainicio,datatermino,horainicio,horatermino,responsavel,area)VALUES(?,?,?,?,?,?,?)";
 			PreparedStatement prest = con.prepareStatement(comandoSql);
 			prest.setString(1, evento.getNome());
-			prest.setDate(2, Date.valueOf(evento.getDataInicio()));//transforma o localdate em date para salvar no banco de dados.
-			prest.setDate(3, Date.valueOf(evento.getDataTermino()));//transforma o localdate em date para salvar no banco de dados.
-			prest.setTime(4, Time.valueOf(evento.getHoraInicio()));//transforma o localtime em time para salvar no banco de dados.
-			prest.setTime(5, Time.valueOf(evento.getHoraTermino()));//transforma o localtime em time para salvar no banco de dados.
+			prest.setDate(2, new Date(evento.getDataInicio().getTime()));//transforma o localdate em date para salvar no banco de dados.
+			prest.setDate(3, new Date(evento.getDataTermino().getTime()));//transforma o localdate em date para salvar no banco de dados.
+			prest.setTime(4, new Time(evento.getHoraInicio().getTime()));//transforma o localtime em time para salvar no banco de dados.
+			prest.setTime(5, new Time(evento.getHoraTermino().getTime()));//transforma o localtime em time para salvar no banco de dados.
 			prest.setString(6,evento.getResponsavel());
 			prest.setString(7, evento.getAreaRelacionada());
 			
@@ -53,23 +61,25 @@ public class EventoDAO {
 	
 	
 	public List<Evento> listaEvento(){
+		listaEventos = new ArrayList<>();
 		try {
-			listaEventos = new ArrayList<>();
-			Statement state = con.createStatement();
-			String comandoSql = "SELECT * FROM evento";
-			ResultSet res = state.executeQuery(comandoSql);
 			
-			LocalDate date ;
-			while(res.next()){
+			Statement st = con.createStatement();
+			String sql = "SELECT * FROM evento";
+			ResultSet rs = st.executeQuery(sql);
+			
+			while(rs.next()){
 				Evento evento = new Evento();
-				evento.setId(res.getInt("idevento"));
-				evento.setNome(res.getString("nomeevento"));
-				evento.setDataInicio(String.valueOf(res.getDate("datainicio").toLocalDate()));// transforma de date para localdade e depois em String para aceitar no set;
-				evento.setDataTermino(String.valueOf(res.getDate("datatermino").toLocalDate()));// transforma de date para localdade e depois em String para aceitar no set;
-				evento.setHoraInicio(String.valueOf(res.getTime("horainicio").toLocalTime()));// transforma de time para localtime e depois em String para aceitar no set;
-				evento.setHoraTermino(String.valueOf(res.getTime("horatermino").toLocalTime()));// transforma de time para localtime e depois em String para aceitar no set;
-				evento.setResponsavel(res.getString("nomeresponsavel"));
-				evento.setAreaRelacionada(res.getString("area"));
+				evento.setId(rs.getInt("idevento"));
+				evento.setNome(rs.getString("nomeevento"));
+				evento.setDataInicio(rs.getDate("datainicio"));// transforma de date para localdade e depois em String para aceitar no set;
+				evento.setDataTermino(rs.getDate("datatermino"));// transforma de date para localdade e depois em String para aceitar no set;
+				evento.setHoraInicio(rs.getTime("horainicio"));// transforma de time para localtime e depois em String para aceitar no set;
+				evento.setHoraTermino(rs.getTime("horatermino"));// transforma de time para localtime e depois em String para aceitar no set;
+				evento.setResponsavel(rs.getString("responsavel"));
+				evento.setAreaRelacionada(rs.getString("area"));
+				
+				
 				
 				listaEventos.add(evento);
 			}
@@ -78,7 +88,7 @@ public class EventoDAO {
 			e.printStackTrace();
 		}
 		
-		return listaEvento();
+		return listaEventos;
 		
 		
 	}
@@ -86,13 +96,13 @@ public class EventoDAO {
 	
 	public void editar (Evento evento){
 		try {
-			String comandoSql = "UPDATE evento SET  nomeevento = ?,datainicio=?,datatermino=?,horainicio=?,horatermino=?,nomeresponsavel=?,area=?";
+			String comandoSql = "UPDATE evento SET  nomeevento = ?,datainicio=?,datatermino=?,horainicio=?,horatermino=?,responsavel=?,area=?";
 			PreparedStatement prest = con.prepareStatement(comandoSql);
 			prest.setString(1, evento.getNome());
-			prest.setDate(2, Date.valueOf(evento.getDataInicio()));//transforma o localdate em date para salvar no banco de dados.
-			prest.setDate(3, Date.valueOf(evento.getDataTermino()));//transforma o localdate em date para salvar no banco de dados.
-			prest.setTime(4, Time.valueOf(evento.getHoraInicio()));//transforma o localtime em time para salvar no banco de dados.
-			prest.setTime(5, Time.valueOf(evento.getHoraTermino()));//transforma o localtime em time para salvar no banco de dados.
+			prest.setDate(2,evento.getDataInicio());//transforma o localdate em date para salvar no banco de dados.
+			prest.setDate(3, evento.getDataTermino());//transforma o localdate em date para salvar no banco de dados.
+			prest.setTime(4, evento.getHoraInicio());//transforma o localtime em time para salvar no banco de dados.
+			prest.setTime(5, evento.getHoraTermino());//transforma o localtime em time para salvar no banco de dados.
 			prest.setString(6,evento.getResponsavel());
 			prest.setString(7, evento.getAreaRelacionada());
 			

@@ -14,13 +14,17 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import Controller.EventoController;
 import Controller.VisitanteController;
 import dao.VisitanteDAO;
+import model.EventoTableMode;
 import model.Visitante;
 import model.VisitanteTableMode;
 
 import javax.swing.border.TitledBorder;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -72,10 +76,7 @@ public class GerenciamentoVisitanteUI extends JDialog {
 				Visitante visitante = new VisitanteTableMode(VisitanteDAO.instanciaSingleton().listaVisitantes)
 						.get(linhaSelecionada);
 				new VisitanteController().remover(visitante);
-				table = new JTable();
-				VisitanteTableMode model = new VisitanteTableMode(new VisitanteController().listar());
-				table.setModel(model);
-				scrollPane.setViewportView(table);
+
 
 				JOptionPane.showMessageDialog(null, "Visitante excluido com  sucesso", "ExclusÃ£o de visitante",
 						JOptionPane.WARNING_MESSAGE);
@@ -98,24 +99,13 @@ public class GerenciamentoVisitanteUI extends JDialog {
 				
 				int linhaSelecionada = table.getSelectedRow();
 				Visitante visitante = new VisitanteTableMode(
-						VisitanteDAO.instanciaSingleton().listaVisitantes
-						).get(linhaSelecionada);
+						VisitanteDAO.instanciaSingleton().listaVisitantes).get(linhaSelecionada);
 				CadastroVisitanteUI cadVisitante = new CadastroVisitanteUI();
 				cadVisitante.setVisitanteParaEdicao(visitante);
 				cadVisitante.setLocationRelativeTo(null);
 				cadVisitante.setVisible(true);
 				
 				
-			}
-		});
-		
-		JButton btnAtualizar = new JButton("Atualizar");
-		btnAtualizar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				table = new JTable();
-				VisitanteTableMode model = new VisitanteTableMode(new VisitanteController().listar());
-				table.setModel(model);
-				scrollPane.setViewportView(table);
 			}
 		});
 		GroupLayout gl_panel = new GroupLayout(panel);
@@ -130,9 +120,7 @@ public class GerenciamentoVisitanteUI extends JDialog {
 							.addPreferredGap(ComponentPlacement.UNRELATED)
 							.addComponent(btnEditar)
 							.addGap(7)
-							.addComponent(btnExcluir)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(btnAtualizar))
+							.addComponent(btnExcluir))
 						.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 752, GroupLayout.PREFERRED_SIZE))
 					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
@@ -145,17 +133,30 @@ public class GerenciamentoVisitanteUI extends JDialog {
 					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnExcluir)
 						.addComponent(btnNovo)
-						.addComponent(btnEditar)
-						.addComponent(btnAtualizar))
+						.addComponent(btnEditar))
 					.addGap(99))
 		);
 
-		table = new JTable();
-		VisitanteTableMode model = new VisitanteTableMode(new VisitanteController().listar());
-		table.setModel(model);
-		scrollPane.setViewportView(table);
+		
+		
+		/*
+		 * Cria um evento listener . que define quando a tela esta ativada ou nao .. 
+		 * quando est aativada ela atualiza o jtable.
+		 * 
+		 */
+		this.addWindowListener(new WindowAdapter() {
+			 public void windowActivated(WindowEvent e) {
+				 table = new JTable();
+					VisitanteTableMode model = new VisitanteTableMode(new VisitanteController().listar());
+					table.setModel(model);
+					scrollPane.setViewportView(table);
+			      }
+		 });
+		
+		
 		panel.setLayout(gl_panel);
 		getContentPane().setLayout(groupLayout);
+		
 		
 		
 	}

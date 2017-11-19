@@ -1,5 +1,11 @@
 package model;
 
+import java.sql.Date;
+import java.sql.Time;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,8 +23,13 @@ public class EventoTableMode extends AbstractTableModel {
 	
 	private List<Evento> valores;   
 	
+	SimpleDateFormat sp =new SimpleDateFormat("dd/MM/yyyy");
+	
+	SimpleDateFormat sph =new SimpleDateFormat("HH:mm");
+	
 	public EventoTableMode(List<Evento> valores) {
 		this.valores = new ArrayList<Evento>(valores);
+		
 
 	}
 
@@ -52,10 +63,10 @@ public class EventoTableMode extends AbstractTableModel {
 		Evento evento = valores.get(row);
 
 		if(column == COL_NOME_EVENTO)return evento.getNome();
-		if(column== COL_DATA_INICIO)return evento.getDataInicio();
-		if(column==COL_DATA_TERMINO)return evento.getDataTermino();
-		if(column == COL_HORA_INICIO)return evento.getHoraInicio();
-		if(column == COL_HORA_TERMINO)return evento.getHoraTermino();
+		if(column== COL_DATA_INICIO)return sp.format(evento.getDataInicio());
+		if(column==COL_DATA_TERMINO)return sp.format(evento.getDataTermino());
+		if(column == COL_HORA_INICIO)return sph.format(evento.getHoraInicio());
+		if(column == COL_HORA_TERMINO)return sph.format(evento.getHoraTermino());
 		if(column == COL_RESPONSAVEL)return evento.getResponsavel();
 		if(column == COL_AREA)return evento.getAreaRelacionada();
 		
@@ -65,21 +76,45 @@ public class EventoTableMode extends AbstractTableModel {
 	
 	public void setValueAt(Object aValue,int rowIndex , int columnIndex){
 		Evento evento = valores.get(rowIndex);
+		
 		if(columnIndex == COL_NOME_EVENTO){
 			evento.setNome(aValue.toString());
+			
 		}else if(columnIndex ==COL_DATA_INICIO){
-			evento.setDataInicio(aValue.toString());
+			try {
+				evento.setDataInicio(new Date(sp.parse(aValue.toString()).getTime()));
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}else if(columnIndex ==COL_DATA_TERMINO){
-			evento.setDataTermino(aValue.toString());
+			try {
+				evento.setDataTermino(new Date(sp.parse(aValue.toString()).getTime()));
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}else if(columnIndex ==COL_HORA_INICIO){
-			evento.setHoraInicio(aValue.toString());
+			try {
+				evento.setHoraInicio(new Time(sph.parse(aValue.toString()).getTime()));
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}else if(columnIndex ==COL_HORA_TERMINO){
-			evento.setHoraTermino(aValue.toString());
+			try {
+				evento.setHoraTermino(new Time(sph.parse(aValue.toString()).getTime()));
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}else if(columnIndex == COL_RESPONSAVEL){
 			evento.setResponsavel(aValue.toString());
 		}else if(columnIndex == COL_AREA){
 			evento.setAreaRelacionada(aValue.toString());
 		}
+		
+		
 	}
 	
 	public Class<?> getColumnClass(int columnIndex) {

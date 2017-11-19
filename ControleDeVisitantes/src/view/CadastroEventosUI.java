@@ -17,18 +17,33 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.border.TitledBorder;
+import javax.swing.text.html.parser.Parser;
 
+import com.mysql.fabric.xmlrpc.base.Data;
+
+import Controller.EventoController;
 import Controller.VisitanteController;
 import dao.VisitanteDAO;
+import model.Evento;
+import model.EventoTableMode;
 import model.Visitante;
 
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.sql.Date;
+import java.sql.Time;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.awt.event.ActionEvent;
 
 public class CadastroEventosUI extends JDialog {
-	private JTextField txtfNomeVisitante;
+	private JTextField txtfNomeEvento;
 	private Visitante visitanteParaEdicao;
 	private JTextField txtfDataInicio;
 	private JTextField txtfDataTermino;
@@ -37,7 +52,12 @@ public class CadastroEventosUI extends JDialog {
 	private JTextField txtfNomeResponsavel;
 	private JTextField txtfAreaRelacionada;
 	
-
+	private Evento eventoParaEdicao;
+	
+	SimpleDateFormat sp =new SimpleDateFormat("dd/MM/yyyy");
+	
+	SimpleDateFormat sph =new SimpleDateFormat("HH:mm");
+	
 	/**
 	 * Launch the application.
 	 */
@@ -46,6 +66,8 @@ public class CadastroEventosUI extends JDialog {
 			CadastroEventosUI dialog = new CadastroEventosUI();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
+			
+			  
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -61,13 +83,15 @@ public class CadastroEventosUI extends JDialog {
 		setTitle("Cadastrar Evento");
 		setBounds(100, 100, 524, 519);
 		
+		
+		
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(null, "Dados", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		
 		JLabel lblNomeEvento = new JLabel("Nome do Evento");
 		
-		txtfNomeVisitante = new JTextField();
-		txtfNomeVisitante.setColumns(10);
+		txtfNomeEvento = new JTextField();
+		txtfNomeEvento.setColumns(10);
 		
 		JLabel lbDataInicio = new JLabel("Data Inicio");
 		
@@ -128,7 +152,7 @@ public class CadastroEventosUI extends JDialog {
 									.addComponent(lblDataTermino)
 									.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 									.addComponent(txtfDataTermino, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-								.addComponent(txtfNomeVisitante, GroupLayout.DEFAULT_SIZE, 334, Short.MAX_VALUE)
+								.addComponent(txtfNomeEvento, GroupLayout.DEFAULT_SIZE, 334, Short.MAX_VALUE)
 								.addGroup(gl_panel.createSequentialGroup()
 									.addComponent(txtfHoraInicio, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 									.addGap(18)
@@ -153,7 +177,7 @@ public class CadastroEventosUI extends JDialog {
 					.addContainerGap()
 					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblNomeEvento)
-						.addComponent(txtfNomeVisitante, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(txtfNomeEvento, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addGap(18)
 					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lbDataInicio)
@@ -191,7 +215,47 @@ public class CadastroEventosUI extends JDialog {
 		JButton btnCadastrar = new JButton("Cadastrar");
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-			
+				if(eventoParaEdicao==null){
+					Evento evento = new Evento();
+					evento.setNome(txtfNomeEvento.getText());
+					
+					try {
+						evento.setDataInicio(new Date(sp.parse(txtfDataInicio.getText()).getTime()));
+						evento.setDataTermino(new Date(sp.parse(txtfDataTermino.getText()).getTime()));
+						evento.setHoraInicio(new Time(sph.parse(txtfHoraInicio.getText()).getTime()));
+						evento.setHoraTermino(new Time(sph.parse(txtfHoraTermino.getText()).getTime()));
+					} catch (ParseException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+					evento.setResponsavel(txtfNomeResponsavel.getText());
+					evento.setAreaRelacionada(txtfAreaRelacionada.getText());
+					
+					new EventoController().salvar(evento);
+					
+					JOptionPane.showMessageDialog(null, "Cadastrado com Sucesso!!");
+				}else{
+					eventoParaEdicao.setNome(txtfNomeEvento.getText());
+					try {
+						eventoParaEdicao.setDataInicio(new Date(sp.parse(txtfDataInicio.getText()).getTime()));
+						eventoParaEdicao.setDataTermino(new Date(sp.parse(txtfDataTermino.getText()).getTime()));
+						eventoParaEdicao.setHoraInicio(new Time(sph.parse(txtfHoraInicio.getText()).getTime()));
+						eventoParaEdicao.setHoraTermino(new Time(sph.parse(txtfHoraTermino.getText()).getTime()));
+					} catch (ParseException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					eventoParaEdicao.setResponsavel(txtfNomeResponsavel.getText());
+					eventoParaEdicao.setAreaRelacionada(txtfAreaRelacionada.getText());
+					
+					new EventoController().editar(eventoParaEdicao);
+					
+					JOptionPane.showMessageDialog(null, "Evento Editado com sucesso!!");
+					
+					
+					
+				}
 				
 				dispose();
 				
@@ -201,18 +265,18 @@ public class CadastroEventosUI extends JDialog {
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.TRAILING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(btnCadastrar)
-							.addGap(203))
-						.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
-							.addComponent(panel, GroupLayout.PREFERRED_SIZE, 473, Short.MAX_VALUE)
-							.addContainerGap())))
+							.addContainerGap()
+							.addComponent(panel, GroupLayout.PREFERRED_SIZE, 498, Short.MAX_VALUE))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(214)
+							.addComponent(btnCadastrar)))
+					.addContainerGap())
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.TRAILING)
-				.addGroup(groupLayout.createSequentialGroup()
+				.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
 					.addGap(21)
 					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 406, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
@@ -222,17 +286,28 @@ public class CadastroEventosUI extends JDialog {
 		getContentPane().setLayout(groupLayout);
 	}
 	
-	public Visitante getVisitanteParaEdicao() {
-		return visitanteParaEdicao;
+	public Evento geteventoParaEdicao() {
+		return eventoParaEdicao;
 	}
 	
-	public void setVisitanteParaEdicao(Visitante visitanteParaEdicao) {
-		this.visitanteParaEdicao = visitanteParaEdicao;
+	public void setEventoParaEdicao(Evento eventoParaEdicao) {
+		this.eventoParaEdicao = eventoParaEdicao;
 		preencherCamposParaEdicao();
 	}
 	
 	public void preencherCamposParaEdicao() {
+		txtfNomeEvento.setText(eventoParaEdicao.getNome());
+		txtfDataInicio.setText(String.valueOf(sp.format(eventoParaEdicao.getDataInicio())));
+		txtfDataTermino.setText(String.valueOf(sp.format(eventoParaEdicao.getDataTermino())));
+		txtfHoraInicio.setText(String.valueOf(sph.format(eventoParaEdicao.getHoraInicio())));
+		txtfHoraTermino.setText(String.valueOf(sph.format(eventoParaEdicao.getHoraTermino())));
+		txtfNomeResponsavel.setText(eventoParaEdicao.getResponsavel());
+		txtfAreaRelacionada.setText(eventoParaEdicao.getAreaRelacionada());
+		
 		
 		
 	}
+	
+
+	
 }

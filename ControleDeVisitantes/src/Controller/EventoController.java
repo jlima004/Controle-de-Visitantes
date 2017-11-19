@@ -14,7 +14,7 @@ public class EventoController {
 	
 	
 	public List<Evento> listar(){
-		return EventoDAO.instanciaSingleton().listaEventos;
+		return EventoDAO.instanciaSingleton().listaEvento();
 	}
 	
 	public void editar(Evento evento){

@@ -5,6 +5,7 @@ import java.awt.FlowLayout;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.GroupLayout;
@@ -12,12 +13,21 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+
+import Controller.EventoController;
+import dao.EventoDAO;
+import model.Evento;
+import model.EventoTableMode;
+
 import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.event.ActionEvent;
 
 public class GerenciamentoEvento extends JDialog {
-	private JTable table;
+	private JTable table_1;
 
 	/**
 	 * Launch the application.
@@ -27,6 +37,8 @@ public class GerenciamentoEvento extends JDialog {
 			GerenciamentoEvento dialog = new GerenciamentoEvento();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
+			
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -40,6 +52,9 @@ public class GerenciamentoEvento extends JDialog {
 		
 		JPanel panel = new JPanel();
 		
+		
+		
+		
 		JButton btnNewButton = new JButton("Novo");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -49,42 +64,69 @@ public class GerenciamentoEvento extends JDialog {
 			}
 		});
 		
+		
+		
 		JButton btnEditar = new JButton("Editar");
+		btnEditar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				int linhaSelecionada = table_1.getSelectedRow();
+				Evento evento = new EventoTableMode(EventoDAO.instanciaSingleton().listaEventos).get(linhaSelecionada);
+				CadastroEventosUI cadEvento = new CadastroEventosUI();
+				cadEvento.setEventoParaEdicao(evento);
+				cadEvento.setLocationRelativeTo(null);
+				cadEvento.setVisible(true);
+			}
+		});
 		
 		JButton btnRemover = new JButton("Remover");
-		
-		JButton button_2 = new JButton("New button");
+		btnRemover.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				
+				
+					int linhaSelecionada = table_1.getSelectedRow();
+					Evento evento = new EventoTableMode(EventoDAO.instanciaSingleton().listaEventos).get(linhaSelecionada);
+					
+					new EventoController().remover(evento);
+				
+					
+					JOptionPane.showMessageDialog(null, "Excluido com Succeso!!");
+				
+				
+				
+				
+				
+			
+			}
+		});
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(panel, GroupLayout.PREFERRED_SIZE, 767, GroupLayout.PREFERRED_SIZE))
-						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(29)
 							.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 99, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(btnEditar, GroupLayout.PREFERRED_SIZE, 99, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(btnRemover, GroupLayout.PREFERRED_SIZE, 99, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(button_2, GroupLayout.PREFERRED_SIZE, 99, GroupLayout.PREFERRED_SIZE)))
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+							.addComponent(btnRemover, GroupLayout.PREFERRED_SIZE, 99, GroupLayout.PREFERRED_SIZE))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(panel, GroupLayout.PREFERRED_SIZE, 767, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap(16, Short.MAX_VALUE))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.TRAILING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap(181, Short.MAX_VALUE)
+					.addContainerGap(191, Short.MAX_VALUE)
 					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 276, GroupLayout.PREFERRED_SIZE)
 					.addGap(18)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 							.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE)
 							.addComponent(btnEditar, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE))
-						.addComponent(btnRemover, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE)
-						.addComponent(button_2, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE))
+						.addComponent(btnRemover, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE))
 					.addGap(26))
 		);
 		
@@ -96,39 +138,30 @@ public class GerenciamentoEvento extends JDialog {
 		);
 		gl_panel.setVerticalGroup(
 			gl_panel.createParallelGroup(Alignment.TRAILING)
-				.addComponent(scrollPane, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 284, Short.MAX_VALUE)
+				.addGroup(Alignment.LEADING, gl_panel.createSequentialGroup()
+					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 265, Short.MAX_VALUE)
+					.addContainerGap())
 		);
 		
-		table = new JTable();
-		table.setModel(new DefaultTableModel(
-			new Object[][] {
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-			},
-			new String[] {
-				"Nome Evento", "Data Inicio", "Data Termino", "Hora Inicio", "Hora Termino", "Responsavel"
-			}
-		));
-		scrollPane.setViewportView(table);
+		
+		/*
+		 * Cria um evento listener . que define quando a tela esta ativada ou nao .. 
+		 * quando est aativada ela atualiza o jtable.
+		 * 
+		 */
+		this.addWindowListener(new WindowAdapter() {
+			 public void windowActivated(WindowEvent e) {
+			       // System.out.println("Window Activated Event");
+			        table_1 = new JTable();
+					EventoTableMode model =  new EventoTableMode(new EventoController().listar());
+					table_1.setModel(model);
+					scrollPane.setViewportView(table_1);
+			      }
+		 });
+		
 		panel.setLayout(gl_panel);
 		getContentPane().setLayout(groupLayout);
 	}
+	
+
 }
