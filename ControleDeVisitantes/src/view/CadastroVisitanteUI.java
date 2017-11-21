@@ -34,7 +34,6 @@ public class CadastroVisitanteUI extends JDialog {
 	private JTextField txtfBairro;
 	private JComboBox<String> cbSexo = new JComboBox<String>();
 	private Visitante visitanteParaEdicao;
-	
 
 	/**
 	 * Launch the application.
@@ -44,7 +43,7 @@ public class CadastroVisitanteUI extends JDialog {
 			CadastroVisitanteUI dialog = new CadastroVisitanteUI();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -151,34 +150,40 @@ public class CadastroVisitanteUI extends JDialog {
 		JButton btnCadastrar = new JButton("Cadastrar");
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if(visitanteParaEdicao == null) {
-					System.out.println(cbSexo.getSelectedItem().toString().charAt(0));
-					Visitante visitante = new Visitante();
-					visitante.setNome(txtfNomeVisitante.getText());
-					visitante.setEmail(txtfEmail.getText());
-					visitante.setBairro(txtfBairro.getText());
-					visitante.setSexo(cbSexo.getSelectedItem().toString());
-					visitante.setTelefone(txtfTelefone.getText());
-					
-					new VisitanteController().salvar(visitante);
-					JOptionPane.showMessageDialog(null, "Cadastrado com Sucesso!!");
-					
-				} else {
-					
-					visitanteParaEdicao.setNome(txtfNomeVisitante.getText());
-					visitanteParaEdicao.setEmail(txtfEmail.getText());
-					visitanteParaEdicao.setBairro(txtfBairro.getText());
-					visitanteParaEdicao.setSexo(cbSexo.getSelectedItem().toString());
-					visitanteParaEdicao.setTelefone(txtfTelefone.getText());
-					
-					new VisitanteController().editar(visitanteParaEdicao);
-					
-					JOptionPane.showMessageDialog(null, "Visitante Editado com sucesso!!");
-					
+				try {
+					if (visitanteParaEdicao == null) {
+						System.out.println(cbSexo.getSelectedItem().toString().charAt(0));
+						Visitante visitante = new Visitante();
+						visitante.setNome(txtfNomeVisitante.getText());
+						visitante.setEmail(txtfEmail.getText());
+						visitante.setBairro(txtfBairro.getText());
+						visitante.setSexo(cbSexo.getSelectedItem().toString());
+						visitante.setTelefone(txtfTelefone.getText());
+
+						new VisitanteController().salvar(visitante);
+
+						JOptionPane.showMessageDialog(null, "Cadastrado com Sucesso!!");
+
+					} else {
+
+						visitanteParaEdicao.setNome(txtfNomeVisitante.getText());
+						visitanteParaEdicao.setEmail(txtfEmail.getText());
+						visitanteParaEdicao.setBairro(txtfBairro.getText());
+						visitanteParaEdicao.setSexo(cbSexo.getSelectedItem().toString());
+						visitanteParaEdicao.setTelefone(txtfTelefone.getText());
+
+						new VisitanteController().editar(visitanteParaEdicao);
+
+						JOptionPane.showMessageDialog(null, "Visitante Editado com sucesso!!");
+
+					}
+					dispose();	
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					JOptionPane.showMessageDialog(null, e.getMessage());
+					e.printStackTrace();
 				}
-				
-				dispose();
-				
+
 			}
 		});
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
@@ -204,16 +209,16 @@ public class CadastroVisitanteUI extends JDialog {
 		);
 		getContentPane().setLayout(groupLayout);
 	}
-	
+
 	public Visitante getVisitanteParaEdicao() {
 		return visitanteParaEdicao;
 	}
-	
+
 	public void setVisitanteParaEdicao(Visitante visitanteParaEdicao) {
 		this.visitanteParaEdicao = visitanteParaEdicao;
 		preencherCamposParaEdicao();
 	}
-	
+
 	public void preencherCamposParaEdicao() {
 		if (visitanteParaEdicao != null) {
 			txtfNomeVisitante.setText(visitanteParaEdicao.getNome());
@@ -223,5 +228,5 @@ public class CadastroVisitanteUI extends JDialog {
 			cbSexo.setSelectedItem(visitanteParaEdicao.getSexo());
 		}
 	}
-	
+
 }

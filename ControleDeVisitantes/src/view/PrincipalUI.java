@@ -33,12 +33,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class PrincipalUI extends JFrame {
-	
-	
 
-	private  JPanel contentPane;
-	
-	
+	private JPanel contentPane;
 
 	/**
 	 * Launch the application.
@@ -68,9 +64,9 @@ public class PrincipalUI extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setLocationRelativeTo(null);
 		setContentPane(contentPane);
-		
+
 		JPanel panel = new JPanel();
-		
+
 		JLabel bntGerenciamentoEvento = new JLabel("");
 		bntGerenciamentoEvento.addMouseListener(new MouseAdapter() {
 			@Override
@@ -78,13 +74,11 @@ public class PrincipalUI extends JFrame {
 				GerenciamentoEvento gEvento = new GerenciamentoEvento();
 				gEvento.setLocationRelativeTo(null);
 				gEvento.setVisible(true);
-				
-				
-				
+
 			}
 		});
 		bntGerenciamentoEvento.setIcon(new ImageIcon(PrincipalUI.class.getResource("/img/ev.jpg")));
-		
+
 		JLabel bntGerenciamentoVisitante = new JLabel("");
 		bntGerenciamentoVisitante.addMouseListener(new MouseAdapter() {
 			@Override
@@ -95,49 +89,38 @@ public class PrincipalUI extends JFrame {
 			}
 		});
 		bntGerenciamentoVisitante.setIcon(new ImageIcon(PrincipalUI.class.getResource("/img/Visitante-icon.png")));
-		
+
 		JLabel bntGerenciamentoPalestrante = new JLabel("");
 		bntGerenciamentoPalestrante.setIcon(new ImageIcon(PrincipalUI.class.getResource("/img/palestrantre-icon.png")));
-		
-		
-		
-		
+
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
-		gl_contentPane.setHorizontalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 668, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addComponent(bntGerenciamentoEvento)
-						.addComponent(bntGerenciamentoVisitante, GroupLayout.PREFERRED_SIZE, 65, GroupLayout.PREFERRED_SIZE)
-						.addComponent(bntGerenciamentoPalestrante, GroupLayout.PREFERRED_SIZE, 65, GroupLayout.PREFERRED_SIZE))
-					.addGap(24))
-		);
-		gl_contentPane.setVerticalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
+		gl_contentPane.setHorizontalGroup(gl_contentPane.createParallelGroup(Alignment.LEADING).addGroup(gl_contentPane
+				.createSequentialGroup()
+				.addComponent(panel, GroupLayout.PREFERRED_SIZE, 668, GroupLayout.PREFERRED_SIZE)
+				.addPreferredGap(ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+				.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING).addComponent(bntGerenciamentoEvento)
+						.addComponent(bntGerenciamentoVisitante, GroupLayout.PREFERRED_SIZE, 65,
+								GroupLayout.PREFERRED_SIZE)
+						.addComponent(bntGerenciamentoPalestrante, GroupLayout.PREFERRED_SIZE, 65,
+								GroupLayout.PREFERRED_SIZE))
+				.addGap(24)));
+		gl_contentPane.setVerticalGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addComponent(panel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGap(119)
-					.addComponent(bntGerenciamentoEvento)
-					.addGap(18)
-					.addComponent(bntGerenciamentoVisitante, GroupLayout.PREFERRED_SIZE, 65, GroupLayout.PREFERRED_SIZE)
-					.addGap(18)
-					.addComponent(bntGerenciamentoPalestrante, GroupLayout.PREFERRED_SIZE, 65, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(182, Short.MAX_VALUE))
-		);
-		
+				.addGroup(gl_contentPane.createSequentialGroup().addGap(119).addComponent(bntGerenciamentoEvento)
+						.addGap(18)
+						.addComponent(bntGerenciamentoVisitante, GroupLayout.PREFERRED_SIZE, 65,
+								GroupLayout.PREFERRED_SIZE)
+						.addGap(18).addComponent(bntGerenciamentoPalestrante, GroupLayout.PREFERRED_SIZE, 65,
+								GroupLayout.PREFERRED_SIZE)
+						.addContainerGap(182, Short.MAX_VALUE)));
+
 		JLabel lbFolder = new JLabel("");
 		lbFolder.setIcon(new ImageIcon(PrincipalUI.class.getResource("/img/Cartaz 2017 NOVO.jpg")));
 		GroupLayout gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addComponent(lbFolder, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 668, Short.MAX_VALUE)
-		);
-		gl_panel.setVerticalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addComponent(lbFolder, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 532, Short.MAX_VALUE)
-		);
+		gl_panel.setHorizontalGroup(gl_panel.createParallelGroup(Alignment.LEADING).addComponent(lbFolder,
+				Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 668, Short.MAX_VALUE));
+		gl_panel.setVerticalGroup(gl_panel.createParallelGroup(Alignment.LEADING).addComponent(lbFolder,
+				Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 532, Short.MAX_VALUE));
 		panel.setLayout(gl_panel);
 		contentPane.setLayout(gl_contentPane);
 	}
