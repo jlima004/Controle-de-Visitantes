@@ -62,6 +62,10 @@ public class VisitanteDAO {
 			e.printStackTrace();
 		}
 	}
+	
+	
+	
+	
 
 	public List<Visitante> listarVisitantes() {
 		try {

@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.naming.ContextNotEmptyException;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JMenuBar;
@@ -88,7 +89,8 @@ public class PrincipalUI extends JFrame {
 		setContentPane(contentPane);
 		
 		
-		
+		comboBox = new JComboBox();
+		addComboBox();
 		
 		JLabel bntGerenciamentoEvento = new JLabel("");
 		bntGerenciamentoEvento.addMouseListener(new MouseAdapter() {
@@ -108,15 +110,10 @@ public class PrincipalUI extends JFrame {
 		bntGerenciamentoVisitante.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				GerenciamentoVisitanteUI gVisitante = new GerenciamentoVisitanteUI();
+				GerenciamentoVisitanteUI gVisitante = new GerenciamentoVisitanteUI((Evento)comboBox.getSelectedItem());
 				gVisitante.setLocationRelativeTo(null);
 				gVisitante.setVisible(true);
-				
-				
-				gVisitante.setIdEventoGere(getValorBox());
-				
-				
-				
+					
 			}
 		});
 		bntGerenciamentoVisitante.setIcon(new ImageIcon(PrincipalUI.class.getResource("/img/Visitante-icon.png")));
@@ -135,7 +132,7 @@ public class PrincipalUI extends JFrame {
 		lblIndiqueOEvento.setForeground(UIManager.getColor("Button.disabledShadow"));
 		lblIndiqueOEvento.setFont(new Font("Tahoma", Font.BOLD, 16));
 		
-		comboBox = new JComboBox();
+		
 		
 		
 		
@@ -184,20 +181,8 @@ public class PrincipalUI extends JFrame {
 		
 		this.addWindowListener(new WindowAdapter() {
 			 public void windowActivated(WindowEvent e) {
-				 int aux = comboBox.getSelectedIndex();
-				 
-				 comboBox.removeAllItems();
-				 lista = (ArrayList<Evento>) new EventoDAO().listaEvento();
-				 	
-				 	comboBox.addItem("Selecione");
-					for (int registro = 0; registro < lista.size(); registro++){
-				        comboBox.addItem(lista.get(registro).getNome());
-				        if(aux == lista.get(registro).getId()){
-				        	comboBox.setSelectedIndex(aux);
-				        	
-				        }
-					}
-			      }
+				addComboBox();
+			 }
 		 });
 		
 		contentPane.setLayout(gl_contentPane);
@@ -205,6 +190,20 @@ public class PrincipalUI extends JFrame {
 		
 		
 	}
+	
+	public void addComboBox(){
+		 lista = (ArrayList<Evento>) new EventoDAO().listaEvento();
+		 	
+		 DefaultComboBoxModel<Evento> modelEvento = new DefaultComboBoxModel<>();
+		 
+		 for (Evento e : lista){
+			 modelEvento.addElement(e);
+		 }
+		 
+		 comboBox.setModel(modelEvento);
+	      
+	}
+	
 
 	public int getValorBox() {
 		return valorBox;

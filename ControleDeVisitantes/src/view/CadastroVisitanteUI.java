@@ -40,7 +40,7 @@ public class CadastroVisitanteUI extends JDialog {
 	private Visitante visitanteParaEdicao;
 	
 	
-	private int idEventoCad;
+	private Evento eventoObject;
 	
 	
 	/**
@@ -48,7 +48,7 @@ public class CadastroVisitanteUI extends JDialog {
 	 */
 	public static void main(String[] args) {
 		try {
-			CadastroVisitanteUI dialog = new CadastroVisitanteUI();
+			CadastroVisitanteUI dialog = new CadastroVisitanteUI(null);
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 			
@@ -60,7 +60,8 @@ public class CadastroVisitanteUI extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public CadastroVisitanteUI() {
+	public CadastroVisitanteUI(Evento eventoObject) {
+		setEventoObject(eventoObject);
 		getContentPane().setBackground(new Color(112, 128, 144));
 		setResizable(false);
 		setModal(true);
@@ -165,13 +166,13 @@ public class CadastroVisitanteUI extends JDialog {
 					//System.out.println(cbSexo.getSelectedItem().toString().charAt(0));
 					
 					Visitante visitante = new Visitante();
-					visitante.setIdEvento(1);
+					visitante.setIdEvento(eventoObject.getId());
 					visitante.setNome(txtfNomeVisitante.getText());
 					visitante.setEmail(txtfEmail.getText());
 					visitante.setBairro(txtfBairro.getText());
 					visitante.setSexo(cbSexo.getSelectedItem().toString());
 					visitante.setTelefone(txtfTelefone.getText());
-					System.out.println(idEventoCad);
+					
 					
 					
 					
@@ -243,13 +244,15 @@ public class CadastroVisitanteUI extends JDialog {
 		}
 	}
 
-	public int getIdEventoCad() {
-		return idEventoCad;
+	public Evento getEventoObject() {
+		return eventoObject;
 	}
 
-	public void setIdEventoCad(int idEventoVi) {
-		this.idEventoCad= idEventoVi;
+	public void setEventoObject(Evento eventoObject) {
+		eventoObject = eventoObject;
 	}
+
+	
 	
 	
 }

@@ -21,6 +21,13 @@ public class Evento {
 	private ArrayList<Evento> eventos = new ArrayList<>();
 	
 	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return getNome();
+	}
+	
+	
 	public String getNome() {
 		return nome;
 	}

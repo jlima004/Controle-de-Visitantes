@@ -137,6 +137,7 @@ public class CadastroEventosUI extends JDialog {
 						evento.setDataTermino(new Date(sp.parse(txtfDataTermino.getText()).getTime()));
 						evento.setHoraInicio(new Time(sph.parse(txtfHoraInicio.getText()).getTime()));
 						evento.setHoraTermino(new Time(sph.parse(txtfHoraTermino.getText()).getTime()));
+						
 					} catch (ParseException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();

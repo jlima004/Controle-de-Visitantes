@@ -17,6 +17,7 @@ import javax.swing.table.DefaultTableModel;
 import Controller.EventoController;
 import Controller.VisitanteController;
 import dao.VisitanteDAO;
+import model.Evento;
 import model.EventoTableMode;
 import model.Visitante;
 import model.VisitanteTableMode;
@@ -34,14 +35,14 @@ import java.awt.Color;
 public class GerenciamentoVisitanteUI extends JDialog {
 	private JTable table;
 	
-	private int idEventoGere;
+	private Evento eventoObject;
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		try {
-			GerenciamentoVisitanteUI dialog = new GerenciamentoVisitanteUI();
+			GerenciamentoVisitanteUI dialog = new GerenciamentoVisitanteUI(null);
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -52,8 +53,9 @@ public class GerenciamentoVisitanteUI extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public GerenciamentoVisitanteUI() {
-		System.out.println(idEventoGere);
+	public GerenciamentoVisitanteUI(Evento eventoObject) {
+		setEventoObject(eventoObject);
+		System.out.println("GERENCIAMENTO "+getEventoObject().getNome());
 		getContentPane().setBackground(new Color(112, 128, 144));
 		setModal(true);
 		setTitle("Gerenciamento de Visitantes");
@@ -99,10 +101,10 @@ public class GerenciamentoVisitanteUI extends JDialog {
 		JButton btnNovo = new JButton("novo");
 		btnNovo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				CadastroVisitanteUI cadVisitante = new CadastroVisitanteUI();
+				CadastroVisitanteUI cadVisitante = new CadastroVisitanteUI(getEventoObject());
 				cadVisitante.setLocationRelativeTo(null);
 				cadVisitante.setVisible(true);
-				cadVisitante.setIdEventoCad(idEventoGere);
+				//cadVisitante.setIdEventoCad(idEventoGere);
 				
 				
 			}
@@ -115,7 +117,7 @@ public class GerenciamentoVisitanteUI extends JDialog {
 				int linhaSelecionada = table.getSelectedRow();
 				Visitante visitante = new VisitanteTableMode(
 						VisitanteDAO.instanciaSingleton().listaVisitantes).get(linhaSelecionada);
-				CadastroVisitanteUI cadVisitante = new CadastroVisitanteUI();
+				CadastroVisitanteUI cadVisitante = new CadastroVisitanteUI(getEventoObject());
 				cadVisitante.setVisitanteParaEdicao(visitante);
 				cadVisitante.setLocationRelativeTo(null);
 				cadVisitante.setVisible(true);
@@ -176,11 +178,13 @@ public class GerenciamentoVisitanteUI extends JDialog {
 		
 	}
 
-	public int getIdEventoGere() {
-		return idEventoGere;
+	public Evento getEventoObject() {
+		return eventoObject;
 	}
 
-	public void setIdEventoGere(int idEventoGere) {
-		this.idEventoGere = idEventoGere;
+	public void setEventoObject(Evento eventoObject) {
+		this.eventoObject = eventoObject;
 	}
+
+	
 }
