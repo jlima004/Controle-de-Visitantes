@@ -2,6 +2,7 @@ package model;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.util.ArrayList;
 
 
 
@@ -16,7 +17,8 @@ public class Evento {
 	private String responsavel;
 	private String areaRelacionada;
 	
-	
+	private ArrayList<Visitante> visitantes = new ArrayList<>();
+	private ArrayList<Evento> eventos = new ArrayList<>();
 	
 	
 	public String getNome() {
@@ -67,6 +69,18 @@ public class Evento {
 	}
 	public void setHoraTermino(Time horaTermino) {
 		this.horaTermino = horaTermino;
+	}
+	public ArrayList<Visitante> getVisitantes() {
+		return visitantes;
+	}
+	public void setVisitantes(ArrayList<Visitante> visitantes) {
+		this.visitantes = visitantes;
+	}
+	public ArrayList<Evento> getEventos() {
+		return eventos;
+	}
+	public void setEventos(ArrayList<Evento> eventos) {
+		this.eventos = eventos;
 	}
 	
 	

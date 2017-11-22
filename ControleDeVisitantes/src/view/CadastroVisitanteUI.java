@@ -18,14 +18,18 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.border.TitledBorder;
 
+import Controller.EventoController;
 import Controller.VisitanteController;
+import dao.EventoDAO;
 import dao.VisitanteDAO;
+import model.Evento;
 import model.Visitante;
 
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.awt.event.ActionEvent;
+import java.awt.Color;
 
 public class CadastroVisitanteUI extends JDialog {
 	private JTextField txtfNomeVisitante;
@@ -35,7 +39,10 @@ public class CadastroVisitanteUI extends JDialog {
 	private JComboBox<String> cbSexo = new JComboBox<String>();
 	private Visitante visitanteParaEdicao;
 	
-
+	
+	private int idEventoCad;
+	
+	
 	/**
 	 * Launch the application.
 	 */
@@ -54,12 +61,14 @@ public class CadastroVisitanteUI extends JDialog {
 	 * Create the dialog.
 	 */
 	public CadastroVisitanteUI() {
+		getContentPane().setBackground(new Color(112, 128, 144));
 		setResizable(false);
 		setModal(true);
 		setTitle("Cadastrar Visitante");
 		setBounds(100, 100, 470, 274);
 		
 		JPanel panel = new JPanel();
+		panel.setBackground(new Color(112, 128, 144));
 		panel.setBorder(new TitledBorder(null, "Dados", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		
 		JLabel lblNome = new JLabel("Nome");
@@ -85,6 +94,7 @@ public class CadastroVisitanteUI extends JDialog {
 		JLabel lblSexo = new JLabel();
 		
 		cbSexo.setModel(new DefaultComboBoxModel(new String[] {"Selecione", "Masculino", "Feminino"}));
+		
 		
 		
 		
@@ -152,15 +162,24 @@ public class CadastroVisitanteUI extends JDialog {
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(visitanteParaEdicao == null) {
-					System.out.println(cbSexo.getSelectedItem().toString().charAt(0));
+					//System.out.println(cbSexo.getSelectedItem().toString().charAt(0));
+					
 					Visitante visitante = new Visitante();
+					visitante.setIdEvento(1);
 					visitante.setNome(txtfNomeVisitante.getText());
 					visitante.setEmail(txtfEmail.getText());
 					visitante.setBairro(txtfBairro.getText());
 					visitante.setSexo(cbSexo.getSelectedItem().toString());
 					visitante.setTelefone(txtfTelefone.getText());
+					System.out.println(idEventoCad);
+					
+					
+					
+					
 					
 					new VisitanteController().salvar(visitante);
+					
+					
 					JOptionPane.showMessageDialog(null, "Cadastrado com Sucesso!!");
 					
 				} else {
@@ -223,5 +242,14 @@ public class CadastroVisitanteUI extends JDialog {
 			cbSexo.setSelectedItem(visitanteParaEdicao.getSexo());
 		}
 	}
+
+	public int getIdEventoCad() {
+		return idEventoCad;
+	}
+
+	public void setIdEventoCad(int idEventoVi) {
+		this.idEventoCad= idEventoVi;
+	}
+	
 	
 }

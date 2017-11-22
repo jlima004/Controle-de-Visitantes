@@ -24,5 +24,7 @@ public class EventoController {
 	public void remover(Evento evento){
 		EventoDAO.instanciaSingleton().excluir(evento.getId());
 	}
+	
+	
 
 }

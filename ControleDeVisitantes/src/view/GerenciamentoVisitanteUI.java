@@ -29,9 +29,12 @@ import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JLabel;
+import java.awt.Color;
 
 public class GerenciamentoVisitanteUI extends JDialog {
 	private JTable table;
+	
+	private int idEventoGere;
 
 	/**
 	 * Launch the application.
@@ -50,21 +53,31 @@ public class GerenciamentoVisitanteUI extends JDialog {
 	 * Create the dialog.
 	 */
 	public GerenciamentoVisitanteUI() {
+		System.out.println(idEventoGere);
+		getContentPane().setBackground(new Color(112, 128, 144));
 		setModal(true);
 		setTitle("Gerenciamento de Visitantes");
 		setBounds(100, 100, 809, 580);
 
 		JPanel panel = new JPanel();
+		panel.setBackground(new Color(112, 128, 144));
 		panel.setBorder(
 				new TitledBorder(null, "Lista de Visitantes", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
-		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup().addContainerGap()
-						.addComponent(panel, GroupLayout.DEFAULT_SIZE, 764, Short.MAX_VALUE).addContainerGap()));
-		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGroup(Alignment.TRAILING,
-				groupLayout.createSequentialGroup().addContainerGap(114, Short.MAX_VALUE)
-						.addComponent(panel, GroupLayout.PREFERRED_SIZE, 407, GroupLayout.PREFERRED_SIZE)
-						.addContainerGap()));
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+					.addGap(4)
+					.addComponent(panel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+					.addContainerGap())
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.TRAILING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap(123, Short.MAX_VALUE)
+					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 332, GroupLayout.PREFERRED_SIZE)
+					.addGap(87))
+		);
 
 		JScrollPane scrollPane = new JScrollPane();
 
@@ -89,6 +102,8 @@ public class GerenciamentoVisitanteUI extends JDialog {
 				CadastroVisitanteUI cadVisitante = new CadastroVisitanteUI();
 				cadVisitante.setLocationRelativeTo(null);
 				cadVisitante.setVisible(true);
+				cadVisitante.setIdEventoCad(idEventoGere);
+				
 				
 			}
 		});
@@ -159,5 +174,13 @@ public class GerenciamentoVisitanteUI extends JDialog {
 		
 		
 		
+	}
+
+	public int getIdEventoGere() {
+		return idEventoGere;
+	}
+
+	public void setIdEventoGere(int idEventoGere) {
+		this.idEventoGere = idEventoGere;
 	}
 }

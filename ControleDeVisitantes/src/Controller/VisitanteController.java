@@ -22,5 +22,7 @@ public class VisitanteController {
 	public void remover(Visitante visitante) {
 		VisitanteDAO.instanciaSingleton().excluir(visitante.getId());
 	}
+	
+	
 
 }

@@ -15,6 +15,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 import model.Evento;
+import model.Visitante;
 import utill.ConnectionUtil;
 
 public class EventoDAO {
@@ -128,6 +129,18 @@ public class EventoDAO {
 			// TODO: handle exception
 		}
 	}
+	
+	
+	
+	
+		
+		
+		
+		
+		
+		
+		
+	
 	
 	
 	

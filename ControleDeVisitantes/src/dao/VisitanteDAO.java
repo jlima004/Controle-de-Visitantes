@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.Evento;
 import model.Visitante;
 import utill.ConnectionUtil;
 
@@ -27,14 +28,35 @@ public class VisitanteDAO {
 	public void salvar(Visitante visitante) {
 		try {
 			String comandoSql = "INSERT INTO visitante(nomevisitante,sexo,telefone,bairro,email) VALUES(?,?,?,?,?)";
-			PreparedStatement prest = com.prepareStatement(comandoSql);
+			PreparedStatement prest = com.prepareStatement(comandoSql,Statement.RETURN_GENERATED_KEYS);
 			prest.setString(1, visitante.getNome());
 			prest.setString(2, visitante.getSexo());
 			prest.setString(3, visitante.getTelefone());
 			prest.setString(4, visitante.getBairro());
 			prest.setString(5, visitante.getEmail());
+			
+			
+			
+			int key = prest.executeUpdate();
+			int idvisitante;
+			
+			if(key>0){
+				ResultSet rs = prest.getGeneratedKeys();
+				rs.next();
+				idvisitante = rs.getInt(1);
+				
+				String sql = "INSERT INTO evento_visitante(idevento,idvisitante) VALUES(?,?)";
+				PreparedStatement pst = com.prepareStatement(sql);
+				pst.setInt(1, visitante.getIdEvento());
+				pst.setInt(2, idvisitante);
+				pst.execute();
+				
+			}
+			
+			
 
-			prest.execute();
+			
+			
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -103,6 +125,9 @@ public class VisitanteDAO {
 		}
 
 	}
+	
+	
+
 	
 	
 
