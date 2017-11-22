@@ -2,11 +2,10 @@ package model;
 
 import java.sql.Date;
 import java.sql.Time;
-
-
+import java.util.ArrayList;
 
 public class Evento {
-	
+
 	private int id;
 	private String nome;
 	private Date dataInicio;
@@ -15,13 +14,12 @@ public class Evento {
 	private Time horaTermino;
 	private String responsavel;
 	private String areaRelacionada;
-	
-	
-	
-	
+	private ArrayList<Atracao> listaAtracoes;
+
 	public String getNome() {
 		return nome;
 	}
+
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
@@ -29,48 +27,72 @@ public class Evento {
 	public String getResponsavel() {
 		return responsavel;
 	}
+
 	public void setResponsavel(String responsavel) {
 		this.responsavel = responsavel;
 	}
+
 	public String getAreaRelacionada() {
 		return areaRelacionada;
 	}
+
 	public void setAreaRelacionada(String areaRelacionada) {
 		this.areaRelacionada = areaRelacionada;
 	}
+
 	public int getId() {
 		return id;
 	}
+
 	public void setId(int id) {
 		this.id = id;
 	}
+
 	public Date getDataInicio() {
 		return dataInicio;
 	}
+
 	public void setDataInicio(Date dataInicio) {
 		this.dataInicio = dataInicio;
 	}
+
 	public Date getDataTermino() {
 		return dataTermino;
 	}
+
 	public void setDataTermino(Date dataTermino) {
 		this.dataTermino = dataTermino;
 	}
+
 	public Time getHoraInicio() {
 		return horaInicio;
 	}
+
 	public void setHoraInicio(Time horaInicio) {
 		this.horaInicio = horaInicio;
 	}
+
 	public Time getHoraTermino() {
 		return horaTermino;
 	}
+
 	public void setHoraTermino(Time horaTermino) {
 		this.horaTermino = horaTermino;
 	}
-	
-	
-	
-	
+
+	public ArrayList<Atracao> getListaAtracoes() {
+		return listaAtracoes;
+	}
+
+	public void setListaAtracoes(ArrayList<Atracao> listaAtracoes) {
+		this.listaAtracoes = listaAtracoes;
+	}
+
+	public void addAtracoes(Atracao atracao) {
+		if (this.listaAtracoes == null) {
+			this.listaAtracoes = new ArrayList<>();
+		}
+		this.listaAtracoes.add(atracao);
+	}
 
 }
