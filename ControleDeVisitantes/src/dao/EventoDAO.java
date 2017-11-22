@@ -15,7 +15,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 import model.Evento;
-import utill.ConnectionUtil;
+import utill.utill.ConnectionUtil;
 
 public class EventoDAO {
 	

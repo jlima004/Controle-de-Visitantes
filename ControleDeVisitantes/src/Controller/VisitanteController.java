@@ -1,33 +1,6 @@
 package Controller;
 
 import java.util.List;
-
-import dao.VisitanteDAO;
-import model.Visitante;
-
-public class VisitanteController {
-
-	public void salvar(Visitante visitante) {
-		VisitanteDAO.instanciaSingleton().salvar(visitante);
-	}
-
-	public List<Visitante> listar() {
-		return VisitanteDAO.instanciaSingleton().listarVisitantes();
-	}
-
-	public void editar(Visitante visitante) {
-		VisitanteDAO.instanciaSingleton().editar(visitante);
-	}
-
-	public void remover(Visitante visitante) {
-		VisitanteDAO.instanciaSingleton().excluir(visitante.getId());
-	}
-
-}
-=======
-package Controller;
-
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

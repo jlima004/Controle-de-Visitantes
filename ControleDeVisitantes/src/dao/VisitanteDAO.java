@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.Visitante;
-import utill.ConnectionUtil;
+import utill.utill.ConnectionUtil;
 
 public class VisitanteDAO {
 
