@@ -118,9 +118,6 @@ public class PrincipalUI extends JFrame {
 		});
 		bntGerenciamentoVisitante.setIcon(new ImageIcon(PrincipalUI.class.getResource("/img/Visitante-icon.png")));
 		
-		JLabel bntGerenciamentoPalestrante = new JLabel("");
-		bntGerenciamentoPalestrante.setIcon(new ImageIcon(PrincipalUI.class.getResource("/img/palestrantre-icon.png")));
-		
 		JLabel labelFolder = new JLabel("");
 		
 		ImageIcon image = new ImageIcon(PrincipalUI.class.getResource("/img/logosenai.png"));
@@ -141,41 +138,36 @@ public class PrincipalUI extends JFrame {
 		
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
-			gl_contentPane.createParallelGroup(Alignment.TRAILING)
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addComponent(labelFolder, GroupLayout.PREFERRED_SIZE, 690, GroupLayout.PREFERRED_SIZE)
-					.addGap(18)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
-						.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
-							.addComponent(bntGerenciamentoEvento)
-							.addComponent(bntGerenciamentoVisitante, GroupLayout.PREFERRED_SIZE, 65, GroupLayout.PREFERRED_SIZE))
-						.addComponent(bntGerenciamentoPalestrante, GroupLayout.PREFERRED_SIZE, 65, GroupLayout.PREFERRED_SIZE))
-					.addGap(11))
-				.addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup()
-					.addGap(112)
-					.addComponent(lblIndiqueOEvento, GroupLayout.PREFERRED_SIZE, 138, GroupLayout.PREFERRED_SIZE)
-					.addGap(18)
-					.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, 220, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(296, Short.MAX_VALUE))
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(112)
+							.addComponent(lblIndiqueOEvento, GroupLayout.PREFERRED_SIZE, 138, GroupLayout.PREFERRED_SIZE)
+							.addGap(18)
+							.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, 220, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addComponent(labelFolder, GroupLayout.PREFERRED_SIZE, 690, GroupLayout.PREFERRED_SIZE)
+							.addGap(18)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addComponent(bntGerenciamentoVisitante, GroupLayout.PREFERRED_SIZE, 65, GroupLayout.PREFERRED_SIZE)
+								.addComponent(bntGerenciamentoEvento))))
+					.addContainerGap(11, Short.MAX_VALUE))
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
-							.addContainerGap()
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-								.addComponent(lblIndiqueOEvento, GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
-								.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE))
-							.addGap(18)
-							.addComponent(labelFolder, GroupLayout.PREFERRED_SIZE, 435, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGap(105)
+					.addContainerGap()
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblIndiqueOEvento, GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
+						.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE))
+					.addGap(18)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+						.addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup()
 							.addComponent(bntGerenciamentoEvento)
 							.addGap(18)
-							.addComponent(bntGerenciamentoVisitante, GroupLayout.PREFERRED_SIZE, 65, GroupLayout.PREFERRED_SIZE)
-							.addGap(18)
-							.addComponent(bntGerenciamentoPalestrante, GroupLayout.PREFERRED_SIZE, 65, GroupLayout.PREFERRED_SIZE)))
+							.addComponent(bntGerenciamentoVisitante, GroupLayout.PREFERRED_SIZE, 65, GroupLayout.PREFERRED_SIZE))
+						.addComponent(labelFolder, GroupLayout.PREFERRED_SIZE, 435, GroupLayout.PREFERRED_SIZE))
 					.addContainerGap())
 		);
 		

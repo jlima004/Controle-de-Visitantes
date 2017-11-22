@@ -97,7 +97,7 @@ public class EventoDAO {
 	
 	public void editar (Evento evento){
 		try {
-			String comandoSql = "UPDATE evento SET  nomeevento = ?,datainicio=?,datatermino=?,horainicio=?,horatermino=?,responsavel=?,area=?";
+			String comandoSql = "UPDATE evento SET  nomeevento = ?,datainicio=?,datatermino=?,horainicio=?,horatermino=?,responsavel=?,area=? WHERE idevento =? ";
 			PreparedStatement prest = con.prepareStatement(comandoSql);
 			prest.setString(1, evento.getNome());
 			prest.setDate(2,evento.getDataInicio());//transforma o localdate em date para salvar no banco de dados.
@@ -106,6 +106,8 @@ public class EventoDAO {
 			prest.setTime(5, evento.getHoraTermino());//transforma o localtime em time para salvar no banco de dados.
 			prest.setString(6,evento.getResponsavel());
 			prest.setString(7, evento.getAreaRelacionada());
+			prest.setInt(8, evento.getId());
+			
 			
 			prest.execute();
 			

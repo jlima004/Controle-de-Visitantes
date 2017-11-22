@@ -129,24 +129,27 @@ public class CadastroEventosUI extends JDialog {
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(eventoParaEdicao==null){
+					try {
+						
+					
 					Evento evento = new Evento();
 					evento.setNome(txtfNomeEvento.getText());
 					
-					try {
+					
 						evento.setDataInicio(new Date(sp.parse(txtfDataInicio.getText()).getTime()));
 						evento.setDataTermino(new Date(sp.parse(txtfDataTermino.getText()).getTime()));
 						evento.setHoraInicio(new Time(sph.parse(txtfHoraInicio.getText()).getTime()));
 						evento.setHoraTermino(new Time(sph.parse(txtfHoraTermino.getText()).getTime()));
 						
-					} catch (ParseException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
 					
-					evento.setResponsavel(txtfNomeResponsavel.getText());
-					evento.setAreaRelacionada(txtfAreaRelacionada.getText());
+					
+						evento.setResponsavel(txtfNomeResponsavel.getText());
+						evento.setAreaRelacionada(txtfAreaRelacionada.getText());
 					
 					new EventoController().salvar(evento);
+					} catch (Exception e) {
+						// TODO: handle exception
+					}
 					
 					JOptionPane.showMessageDialog(null, "Cadastrado com Sucesso!!");
 				}else{
@@ -272,14 +275,15 @@ public class CadastroEventosUI extends JDialog {
 	}
 	
 	public void preencherCamposParaEdicao() {
-		txtfNomeEvento.setText(eventoParaEdicao.getNome());
-		txtfDataInicio.setText(String.valueOf(sp.format(eventoParaEdicao.getDataInicio())));
-		txtfDataTermino.setText(String.valueOf(sp.format(eventoParaEdicao.getDataTermino())));
-		txtfHoraInicio.setText(String.valueOf(sph.format(eventoParaEdicao.getHoraInicio())));
-		txtfHoraTermino.setText(String.valueOf(sph.format(eventoParaEdicao.getHoraTermino())));
-		txtfNomeResponsavel.setText(eventoParaEdicao.getResponsavel());
-		txtfAreaRelacionada.setText(eventoParaEdicao.getAreaRelacionada());
-		
+		if(eventoParaEdicao!= null){
+			txtfNomeEvento.setText(eventoParaEdicao.getNome());
+			txtfDataInicio.setText(String.valueOf(sp.format(eventoParaEdicao.getDataInicio())));
+			txtfDataTermino.setText(String.valueOf(sp.format(eventoParaEdicao.getDataTermino())));
+			txtfHoraInicio.setText(String.valueOf(sph.format(eventoParaEdicao.getHoraInicio())));
+			txtfHoraTermino.setText(String.valueOf(sph.format(eventoParaEdicao.getHoraTermino())));
+			txtfNomeResponsavel.setText(eventoParaEdicao.getResponsavel());
+			txtfAreaRelacionada.setText(eventoParaEdicao.getAreaRelacionada());
+		}
 		
 		
 	}

@@ -178,7 +178,12 @@ public class CadastroVisitanteUI extends JDialog {
 					
 					
 					
-					new VisitanteController().salvar(visitante);
+					try {
+						new VisitanteController().salvar(visitante);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					
 					
 					JOptionPane.showMessageDialog(null, "Cadastrado com Sucesso!!");

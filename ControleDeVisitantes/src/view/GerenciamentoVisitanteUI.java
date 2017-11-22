@@ -26,6 +26,8 @@ import javax.swing.border.TitledBorder;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
+import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -36,6 +38,7 @@ public class GerenciamentoVisitanteUI extends JDialog {
 	private JTable table;
 	
 	private Evento eventoObject;
+	private List<Visitante> visitantes;
 
 	/**
 	 * Launch the application.
@@ -163,10 +166,16 @@ public class GerenciamentoVisitanteUI extends JDialog {
 		 */
 		this.addWindowListener(new WindowAdapter() {
 			 public void windowActivated(WindowEvent e) {
-				 table = new JTable();
-					VisitanteTableMode model = new VisitanteTableMode(new VisitanteController().listar());
+				    table = new JTable();	
+				    visitantes = new ArrayList<Visitante>();
+				    visitantes = new VisitanteController().listarVisitantePorEvento(getEventoObject().getId());
+				    
+				   
+				    
+					VisitanteTableMode model = new VisitanteTableMode(visitantes);
 					table.setModel(model);
 					scrollPane.setViewportView(table);
+					
 			      }
 		 });
 		

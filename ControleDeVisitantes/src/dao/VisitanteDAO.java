@@ -8,6 +8,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mysql.fabric.xmlrpc.base.Array;
+
 import model.Evento;
 import model.Visitante;
 import utill.ConnectionUtil;
@@ -63,7 +65,34 @@ public class VisitanteDAO {
 		}
 	}
 	
-	
+	public List<Visitante> listarVisitantePorEvento(int idEvento){
+			try {
+				listaVisitantes = new ArrayList<>();
+				String comandoSql = "SELECT * FROM visitante v INNER JOIN evento_visitante as ev ON ev.idvisitante = v.idvisitante WHERE ev.idevento = ?";
+				PreparedStatement pstmt = com.prepareStatement(comandoSql);
+				pstmt.setInt(1, idEvento);
+				
+				ResultSet rs = pstmt.executeQuery();
+				
+				while(rs.next()){
+					Visitante visitante = new Visitante();
+					visitante.setId(rs.getInt("idvisitante"));
+					visitante.setNome(rs.getString("nomeVisitante"));
+					visitante.setBairro(rs.getString("bairro"));
+					visitante.setEmail(rs.getString("email"));
+					visitante.setTelefone(rs.getString("telefone"));
+					visitante.setSexo(rs.getString("sexo"));
+					
+					listaVisitantes.add(visitante);
+				}
+			} catch (SQLException e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			}
+			
+			return listaVisitantes;
+		
+	}
 	
 	
 
@@ -118,6 +147,7 @@ public class VisitanteDAO {
 
 	public void excluir(int id) {
 		try {
+			
 			String comandoSql = "DELETE FROM visitante WHERE idvisitante = ?";
 			PreparedStatement prest = com.prepareStatement(comandoSql);
 			prest.setInt(1, id);

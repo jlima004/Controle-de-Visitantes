@@ -3,6 +3,7 @@ package model;
 import java.sql.Date;
 import java.sql.Time;
 import java.util.ArrayList;
+import java.util.List;
 
 
 
@@ -80,8 +81,8 @@ public class Evento {
 	public ArrayList<Visitante> getVisitantes() {
 		return visitantes;
 	}
-	public void setVisitantes(ArrayList<Visitante> visitantes) {
-		this.visitantes = visitantes;
+	public void setVisitantes(List<Visitante> list) {
+		this.visitantes = (ArrayList<Visitante>) list;
 	}
 	public ArrayList<Evento> getEventos() {
 		return eventos;

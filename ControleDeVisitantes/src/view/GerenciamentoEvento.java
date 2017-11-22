@@ -91,6 +91,7 @@ public class GerenciamentoEvento extends JDialog {
 		JButton btnEditar = new JButton("Editar");
 		btnEditar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				
 				int linhaSelecionada = table_1.getSelectedRow();
 				Evento evento = new EventoTableMode(EventoDAO.instanciaSingleton().listaEventos).get(linhaSelecionada);
 				CadastroEventosUI cadEvento = new CadastroEventosUI();
