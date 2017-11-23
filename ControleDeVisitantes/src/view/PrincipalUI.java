@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.naming.ContextNotEmptyException;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JMenuBar;
@@ -19,22 +20,43 @@ import java.awt.CardLayout;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JTextField;
 import java.awt.Font;
+import java.awt.Image;
+
 import javax.swing.JMenuItem;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
+
+import Controller.EventoController;
+import dao.EventoDAO;
+import model.Evento;
+import model.EventoTableMode;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JDesktopPane;
 import javax.swing.border.TitledBorder;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.util.ArrayList;
+import java.awt.Color;
+import javax.swing.UIManager;
+import javax.swing.JComboBox;
 
 public class PrincipalUI extends JFrame {
+	
+	
 
-	private JPanel contentPane;
+	private  JPanel contentPane;
+	ArrayList<Evento> lista = new ArrayList<>();
+	JComboBox comboBox;
+	private int valorBox;
+	
+	
 
 	/**
 	 * Launch the application.
@@ -61,12 +83,15 @@ public class PrincipalUI extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 569);
 		contentPane = new JPanel();
+		contentPane.setBackground(new Color(112, 128, 144));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setLocationRelativeTo(null);
 		setContentPane(contentPane);
-
-		JPanel panel = new JPanel();
-
+		
+		
+		comboBox = new JComboBox();
+		addComboBox();
+		
 		JLabel bntGerenciamentoEvento = new JLabel("");
 		bntGerenciamentoEvento.addMouseListener(new MouseAdapter() {
 			@Override
@@ -83,45 +108,98 @@ public class PrincipalUI extends JFrame {
 		bntGerenciamentoVisitante.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				GerenciamentoVisitanteUI gVisitante = new GerenciamentoVisitanteUI();
+				GerenciamentoVisitanteUI gVisitante = new GerenciamentoVisitanteUI((Evento)comboBox.getSelectedItem());
 				gVisitante.setLocationRelativeTo(null);
 				gVisitante.setVisible(true);
+					
 			}
 		});
 		bntGerenciamentoVisitante.setIcon(new ImageIcon(PrincipalUI.class.getResource("/img/Visitante-icon.png")));
-
-		JLabel bntGerenciamentoPalestrante = new JLabel("");
-		bntGerenciamentoPalestrante.setIcon(new ImageIcon(PrincipalUI.class.getResource("/img/palestrantre-icon.png")));
-
+		
+		JLabel labelFolder = new JLabel("");
+		
+		ImageIcon image = new ImageIcon(PrincipalUI.class.getResource("/img/logosenai.png"));
+		Image img = image.getImage().getScaledInstance(400, 400, Image.SCALE_SMOOTH);
+		
+		labelFolder.setIcon(new ImageIcon(PrincipalUI.class.getResource("/img/logosenai.png")));
+		
+		JLabel lblIndiqueOEvento = new JLabel("Indique o Evento");
+		lblIndiqueOEvento.setForeground(UIManager.getColor("Button.disabledShadow"));
+		lblIndiqueOEvento.setFont(new Font("Tahoma", Font.BOLD, 16));
+		
+		
+		
+		
+		
+	
+		
+		
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
-		gl_contentPane.setHorizontalGroup(gl_contentPane.createParallelGroup(Alignment.LEADING).addGroup(gl_contentPane
-				.createSequentialGroup()
-				.addComponent(panel, GroupLayout.PREFERRED_SIZE, 668, GroupLayout.PREFERRED_SIZE)
-				.addPreferredGap(ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
-				.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING).addComponent(bntGerenciamentoEvento)
-						.addComponent(bntGerenciamentoVisitante, GroupLayout.PREFERRED_SIZE, 65,
-								GroupLayout.PREFERRED_SIZE)
-						.addComponent(bntGerenciamentoPalestrante, GroupLayout.PREFERRED_SIZE, 65,
-								GroupLayout.PREFERRED_SIZE))
-				.addGap(24)));
-		gl_contentPane.setVerticalGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addComponent(panel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-				.addGroup(gl_contentPane.createSequentialGroup().addGap(119).addComponent(bntGerenciamentoEvento)
-						.addGap(18)
-						.addComponent(bntGerenciamentoVisitante, GroupLayout.PREFERRED_SIZE, 65,
-								GroupLayout.PREFERRED_SIZE)
-						.addGap(18).addComponent(bntGerenciamentoPalestrante, GroupLayout.PREFERRED_SIZE, 65,
-								GroupLayout.PREFERRED_SIZE)
-						.addContainerGap(182, Short.MAX_VALUE)));
-
-		JLabel lbFolder = new JLabel("");
-		lbFolder.setIcon(new ImageIcon(PrincipalUI.class.getResource("/img/Cartaz 2017 NOVO.jpg")));
-		GroupLayout gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(gl_panel.createParallelGroup(Alignment.LEADING).addComponent(lbFolder,
-				Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 668, Short.MAX_VALUE));
-		gl_panel.setVerticalGroup(gl_panel.createParallelGroup(Alignment.LEADING).addComponent(lbFolder,
-				Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 532, Short.MAX_VALUE));
-		panel.setLayout(gl_panel);
+		gl_contentPane.setHorizontalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(112)
+							.addComponent(lblIndiqueOEvento, GroupLayout.PREFERRED_SIZE, 138, GroupLayout.PREFERRED_SIZE)
+							.addGap(18)
+							.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, 220, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addComponent(labelFolder, GroupLayout.PREFERRED_SIZE, 690, GroupLayout.PREFERRED_SIZE)
+							.addGap(18)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addComponent(bntGerenciamentoVisitante, GroupLayout.PREFERRED_SIZE, 65, GroupLayout.PREFERRED_SIZE)
+								.addComponent(bntGerenciamentoEvento))))
+					.addContainerGap(11, Short.MAX_VALUE))
+		);
+		gl_contentPane.setVerticalGroup(
+			gl_contentPane.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblIndiqueOEvento, GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
+						.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE))
+					.addGap(18)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+						.addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup()
+							.addComponent(bntGerenciamentoEvento)
+							.addGap(18)
+							.addComponent(bntGerenciamentoVisitante, GroupLayout.PREFERRED_SIZE, 65, GroupLayout.PREFERRED_SIZE))
+						.addComponent(labelFolder, GroupLayout.PREFERRED_SIZE, 435, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap())
+		);
+		
+		this.addWindowListener(new WindowAdapter() {
+			 public void windowActivated(WindowEvent e) {
+				addComboBox();
+			 }
+		 });
+		
 		contentPane.setLayout(gl_contentPane);
+		
+		
+		
+	}
+	
+	public void addComboBox(){
+		 lista = (ArrayList<Evento>) new EventoDAO().listaEvento();
+		 	
+		 DefaultComboBoxModel<Evento> modelEvento = new DefaultComboBoxModel<>();
+		 
+		 for (Evento e : lista){
+			 modelEvento.addElement(e);
+		 }
+		 
+		 comboBox.setModel(modelEvento);
+	      
+	}
+	
+
+	public int getValorBox() {
+		return valorBox;
+	}
+
+	public void setValorBox(int valorBox) {
+		this.valorBox = valorBox;
 	}
 }

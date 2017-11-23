@@ -8,8 +8,11 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mysql.fabric.xmlrpc.base.Array;
+
+import model.Evento;
 import model.Visitante;
-import utill.utill.ConnectionUtil;
+import utill.ConnectionUtil;
 
 public class VisitanteDAO {
 
@@ -27,19 +30,71 @@ public class VisitanteDAO {
 	public void salvar(Visitante visitante) {
 		try {
 			String comandoSql = "INSERT INTO visitante(nomevisitante,sexo,telefone,bairro,email) VALUES(?,?,?,?,?)";
-			PreparedStatement prest = com.prepareStatement(comandoSql);
+			PreparedStatement prest = com.prepareStatement(comandoSql,Statement.RETURN_GENERATED_KEYS);
 			prest.setString(1, visitante.getNome());
 			prest.setString(2, visitante.getSexo());
 			prest.setString(3, visitante.getTelefone());
 			prest.setString(4, visitante.getBairro());
 			prest.setString(5, visitante.getEmail());
+			
+			
+			
+			int key = prest.executeUpdate();
+			int idvisitante;
+			
+			if(key>0){
+				ResultSet rs = prest.getGeneratedKeys();
+				rs.next();
+				idvisitante = rs.getInt(1);
+				
+				String sql = "INSERT INTO evento_visitante(idevento,idvisitante) VALUES(?,?)";
+				PreparedStatement pst = com.prepareStatement(sql);
+				pst.setInt(1, visitante.getIdEvento());
+				pst.setInt(2, idvisitante);
+				pst.execute();
+				
+			}
+			
+			
 
-			prest.execute();
+			
+			
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
+	
+	public List<Visitante> listarVisitantePorEvento(int idEvento){
+			try {
+				listaVisitantes = new ArrayList<>();
+				String comandoSql = "SELECT * FROM visitante v INNER JOIN evento_visitante as ev ON ev.idvisitante = v.idvisitante WHERE ev.idevento = ?";
+				PreparedStatement pstmt = com.prepareStatement(comandoSql);
+				pstmt.setInt(1, idEvento);
+				
+				ResultSet rs = pstmt.executeQuery();
+				
+				while(rs.next()){
+					Visitante visitante = new Visitante();
+					visitante.setId(rs.getInt("idvisitante"));
+					visitante.setNome(rs.getString("nomeVisitante"));
+					visitante.setBairro(rs.getString("bairro"));
+					visitante.setEmail(rs.getString("email"));
+					visitante.setTelefone(rs.getString("telefone"));
+					visitante.setSexo(rs.getString("sexo"));
+					
+					listaVisitantes.add(visitante);
+				}
+			} catch (SQLException e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			}
+			
+			return listaVisitantes;
+		
+	}
+	
+	
 
 	public List<Visitante> listarVisitantes() {
 		try {
@@ -92,6 +147,7 @@ public class VisitanteDAO {
 
 	public void excluir(int id) {
 		try {
+			
 			String comandoSql = "DELETE FROM visitante WHERE idvisitante = ?";
 			PreparedStatement prest = com.prepareStatement(comandoSql);
 			prest.setInt(1, id);
@@ -103,6 +159,9 @@ public class VisitanteDAO {
 		}
 
 	}
+	
+	
+
 	
 	
 

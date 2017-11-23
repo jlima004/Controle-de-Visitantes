@@ -17,6 +17,7 @@ import javax.swing.table.DefaultTableModel;
 import Controller.EventoController;
 import Controller.VisitanteController;
 import dao.VisitanteDAO;
+import model.Evento;
 import model.EventoTableMode;
 import model.Visitante;
 import model.VisitanteTableMode;
@@ -25,20 +26,26 @@ import javax.swing.border.TitledBorder;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
+import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JLabel;
+import java.awt.Color;
 
 public class GerenciamentoVisitanteUI extends JDialog {
 	private JTable table;
+	
+	private Evento eventoObject;
+	private List<Visitante> visitantes;
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		try {
-			GerenciamentoVisitanteUI dialog = new GerenciamentoVisitanteUI();
+			GerenciamentoVisitanteUI dialog = new GerenciamentoVisitanteUI(null);
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -49,22 +56,33 @@ public class GerenciamentoVisitanteUI extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public GerenciamentoVisitanteUI() {
+	public GerenciamentoVisitanteUI(Evento eventoObject) {
+		setEventoObject(eventoObject);
+		System.out.println("GERENCIAMENTO "+getEventoObject().getNome());
+		getContentPane().setBackground(new Color(112, 128, 144));
 		setModal(true);
 		setTitle("Gerenciamento de Visitantes");
 		setBounds(100, 100, 809, 580);
 
 		JPanel panel = new JPanel();
+		panel.setBackground(new Color(112, 128, 144));
 		panel.setBorder(
 				new TitledBorder(null, "Lista de Visitantes", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
-		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup().addContainerGap()
-						.addComponent(panel, GroupLayout.DEFAULT_SIZE, 764, Short.MAX_VALUE).addContainerGap()));
-		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGroup(Alignment.TRAILING,
-				groupLayout.createSequentialGroup().addContainerGap(114, Short.MAX_VALUE)
-						.addComponent(panel, GroupLayout.PREFERRED_SIZE, 407, GroupLayout.PREFERRED_SIZE)
-						.addContainerGap()));
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+					.addGap(4)
+					.addComponent(panel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+					.addContainerGap())
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.TRAILING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap(123, Short.MAX_VALUE)
+					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 332, GroupLayout.PREFERRED_SIZE)
+					.addGap(87))
+		);
 
 		JScrollPane scrollPane = new JScrollPane();
 
@@ -86,9 +104,11 @@ public class GerenciamentoVisitanteUI extends JDialog {
 		JButton btnNovo = new JButton("novo");
 		btnNovo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				CadastroVisitanteUI cadVisitante = new CadastroVisitanteUI();
+				CadastroVisitanteUI cadVisitante = new CadastroVisitanteUI(getEventoObject());
 				cadVisitante.setLocationRelativeTo(null);
 				cadVisitante.setVisible(true);
+				//cadVisitante.setIdEventoCad(idEventoGere);
+				
 				
 			}
 		});
@@ -100,7 +120,7 @@ public class GerenciamentoVisitanteUI extends JDialog {
 				int linhaSelecionada = table.getSelectedRow();
 				Visitante visitante = new VisitanteTableMode(
 						VisitanteDAO.instanciaSingleton().listaVisitantes).get(linhaSelecionada);
-				CadastroVisitanteUI cadVisitante = new CadastroVisitanteUI();
+				CadastroVisitanteUI cadVisitante = new CadastroVisitanteUI(getEventoObject());
 				cadVisitante.setVisitanteParaEdicao(visitante);
 				cadVisitante.setLocationRelativeTo(null);
 				cadVisitante.setVisible(true);
@@ -146,10 +166,16 @@ public class GerenciamentoVisitanteUI extends JDialog {
 		 */
 		this.addWindowListener(new WindowAdapter() {
 			 public void windowActivated(WindowEvent e) {
-				 table = new JTable();
-					VisitanteTableMode model = new VisitanteTableMode(new VisitanteController().listar());
+				    table = new JTable();	
+				    visitantes = new ArrayList<Visitante>();
+				    visitantes = new VisitanteController().listarVisitantePorEvento(getEventoObject().getId());
+				    
+				   
+				    
+					VisitanteTableMode model = new VisitanteTableMode(visitantes);
 					table.setModel(model);
 					scrollPane.setViewportView(table);
+					
 			      }
 		 });
 		
@@ -160,4 +186,14 @@ public class GerenciamentoVisitanteUI extends JDialog {
 		
 		
 	}
+
+	public Evento getEventoObject() {
+		return eventoObject;
+	}
+
+	public void setEventoObject(Evento eventoObject) {
+		this.eventoObject = eventoObject;
+	}
+
+	
 }

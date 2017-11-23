@@ -9,7 +9,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import model.Atracao;
-import utill.utill.ConnectionUtil;
+import utill.ConnectionUtil;
 
 public class AtracaoDAO {
 	

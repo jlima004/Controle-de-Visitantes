@@ -18,14 +18,18 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.border.TitledBorder;
 
+import Controller.EventoController;
 import Controller.VisitanteController;
+import dao.EventoDAO;
 import dao.VisitanteDAO;
+import model.Evento;
 import model.Visitante;
 
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.awt.event.ActionEvent;
+import java.awt.Color;
 
 public class CadastroVisitanteUI extends JDialog {
 	private JTextField txtfNomeVisitante;
@@ -34,16 +38,20 @@ public class CadastroVisitanteUI extends JDialog {
 	private JTextField txtfBairro;
 	private JComboBox<String> cbSexo = new JComboBox<String>();
 	private Visitante visitanteParaEdicao;
-
+	
+	
+	private Evento eventoObject;
+	
+	
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		try {
-			CadastroVisitanteUI dialog = new CadastroVisitanteUI();
+			CadastroVisitanteUI dialog = new CadastroVisitanteUI(null);
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
-
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -52,13 +60,16 @@ public class CadastroVisitanteUI extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public CadastroVisitanteUI() {
+	public CadastroVisitanteUI(Evento eventoObject) {
+		setEventoObject(eventoObject);
+		getContentPane().setBackground(new Color(112, 128, 144));
 		setResizable(false);
 		setModal(true);
 		setTitle("Cadastrar Visitante");
 		setBounds(100, 100, 470, 274);
 		
 		JPanel panel = new JPanel();
+		panel.setBackground(new Color(112, 128, 144));
 		panel.setBorder(new TitledBorder(null, "Dados", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		
 		JLabel lblNome = new JLabel("Nome");
@@ -84,6 +95,7 @@ public class CadastroVisitanteUI extends JDialog {
 		JLabel lblSexo = new JLabel();
 		
 		cbSexo.setModel(new DefaultComboBoxModel(new String[] {"Selecione", "Masculino", "Feminino"}));
+		
 		
 		
 		
@@ -150,40 +162,48 @@ public class CadastroVisitanteUI extends JDialog {
 		JButton btnCadastrar = new JButton("Cadastrar");
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				try {
-					if (visitanteParaEdicao == null) {
-						System.out.println(cbSexo.getSelectedItem().toString().charAt(0));
-						Visitante visitante = new Visitante();
-						visitante.setNome(txtfNomeVisitante.getText());
-						visitante.setEmail(txtfEmail.getText());
-						visitante.setBairro(txtfBairro.getText());
-						visitante.setSexo(cbSexo.getSelectedItem().toString());
-						visitante.setTelefone(txtfTelefone.getText());
-
+				if(visitanteParaEdicao == null) {
+					//System.out.println(cbSexo.getSelectedItem().toString().charAt(0));
+					
+					Visitante visitante = new Visitante();
+					visitante.setIdEvento(eventoObject.getId());
+					visitante.setNome(txtfNomeVisitante.getText());
+					visitante.setEmail(txtfEmail.getText());
+					visitante.setBairro(txtfBairro.getText());
+					visitante.setSexo(cbSexo.getSelectedItem().toString());
+					visitante.setTelefone(txtfTelefone.getText());
+					
+					
+					
+					
+					
+					
+					try {
 						new VisitanteController().salvar(visitante);
-
-						JOptionPane.showMessageDialog(null, "Cadastrado com Sucesso!!");
-
-					} else {
-
-						visitanteParaEdicao.setNome(txtfNomeVisitante.getText());
-						visitanteParaEdicao.setEmail(txtfEmail.getText());
-						visitanteParaEdicao.setBairro(txtfBairro.getText());
-						visitanteParaEdicao.setSexo(cbSexo.getSelectedItem().toString());
-						visitanteParaEdicao.setTelefone(txtfTelefone.getText());
-
-						new VisitanteController().editar(visitanteParaEdicao);
-
-						JOptionPane.showMessageDialog(null, "Visitante Editado com sucesso!!");
-
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 					}
-					dispose();	
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					JOptionPane.showMessageDialog(null, e.getMessage());
-					e.printStackTrace();
+					
+					
+					JOptionPane.showMessageDialog(null, "Cadastrado com Sucesso!!");
+					
+				} else {
+					
+					visitanteParaEdicao.setNome(txtfNomeVisitante.getText());
+					visitanteParaEdicao.setEmail(txtfEmail.getText());
+					visitanteParaEdicao.setBairro(txtfBairro.getText());
+					visitanteParaEdicao.setSexo(cbSexo.getSelectedItem().toString());
+					visitanteParaEdicao.setTelefone(txtfTelefone.getText());
+					
+					new VisitanteController().editar(visitanteParaEdicao);
+					
+					JOptionPane.showMessageDialog(null, "Visitante Editado com sucesso!!");
+					
 				}
-
+				
+				dispose();
+				
 			}
 		});
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
@@ -209,16 +229,16 @@ public class CadastroVisitanteUI extends JDialog {
 		);
 		getContentPane().setLayout(groupLayout);
 	}
-
+	
 	public Visitante getVisitanteParaEdicao() {
 		return visitanteParaEdicao;
 	}
-
+	
 	public void setVisitanteParaEdicao(Visitante visitanteParaEdicao) {
 		this.visitanteParaEdicao = visitanteParaEdicao;
 		preencherCamposParaEdicao();
 	}
-
+	
 	public void preencherCamposParaEdicao() {
 		if (visitanteParaEdicao != null) {
 			txtfNomeVisitante.setText(visitanteParaEdicao.getNome());
@@ -229,4 +249,15 @@ public class CadastroVisitanteUI extends JDialog {
 		}
 	}
 
+	public Evento getEventoObject() {
+		return eventoObject;
+	}
+
+	public void setEventoObject(Evento eventoObject) {
+		eventoObject = eventoObject;
+	}
+
+	
+	
+	
 }
