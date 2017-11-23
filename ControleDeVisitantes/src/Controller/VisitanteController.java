@@ -43,4 +43,10 @@ public class VisitanteController {
 		VisitanteDAO.instanciaSingleton().excluir(visitante.getId());
 	}
 
+	//Conflito aqui!
+	public List<Visitante> listarVisitantePorEvento(int id) {
+		
+		return null;
+	}
+
 }
