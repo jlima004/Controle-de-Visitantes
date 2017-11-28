@@ -161,6 +161,38 @@ public class VisitanteDAO {
 	}
 	
 	
+	public List<Visitante> listaPorArea(String area){
+		try {
+			listaVisitantes = new ArrayList<>();
+			String comandoSql = "SELECT *  FROM visitante v INNER JOIN evento_visitante AS ev ON ev.idvisitante = v.idvisitante  INNER JOIN evento AS e ON e.idevento = ev.idevento  WHERE e.area = ?";
+			PreparedStatement pstmt = com.prepareStatement(comandoSql);
+			pstmt.setString(1, area );
+			
+			ResultSet rs = pstmt.executeQuery();
+			
+			while(rs.next()){
+				Visitante visitante = new Visitante();
+				visitante.setId(rs.getInt("idvisitante"));
+				visitante.setNome(rs.getString("nomeVisitante"));
+				visitante.setBairro(rs.getString("bairro"));
+				visitante.setEmail(rs.getString("email"));
+				visitante.setTelefone(rs.getString("telefone"));
+				visitante.setSexo(rs.getString("sexo"));
+				
+				listaVisitantes.add(visitante);
+			}
+		} catch (SQLException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		
+		return listaVisitantes;
+			
+			
+			
+	}
+	
+	
 
 	
 	

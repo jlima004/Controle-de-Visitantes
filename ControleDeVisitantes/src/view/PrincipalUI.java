@@ -97,26 +97,26 @@ public class PrincipalUI extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				GerenciamentoEvento gEvento = new GerenciamentoEvento();
+				bntGerenciamentoEvento.setIcon(new ImageIcon(PrincipalUI.class.getResource("/img/icon-evento2.png")));
 				gEvento.setLocationRelativeTo(null);
 				gEvento.setVisible(true);
 				
-				
-				
 			}
 		});
-		bntGerenciamentoEvento.setIcon(new ImageIcon(PrincipalUI.class.getResource("/img/ev.jpg")));
+		
 		
 		JLabel bntGerenciamentoVisitante = new JLabel("");
 		bntGerenciamentoVisitante.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				GerenciamentoVisitanteUI gVisitante = new GerenciamentoVisitanteUI((Evento)comboBox.getSelectedItem());
+				bntGerenciamentoVisitante.setIcon(new ImageIcon(PrincipalUI.class.getResource("/img/icon-visitante2.png")));
 				gVisitante.setLocationRelativeTo(null);
 				gVisitante.setVisible(true);
 					
 			}
 		});
-		bntGerenciamentoVisitante.setIcon(new ImageIcon(PrincipalUI.class.getResource("/img/Visitante-icon.png")));
+		
 		
 		JLabel labelFolder = new JLabel("");
 		
@@ -128,6 +128,36 @@ public class PrincipalUI extends JFrame {
 		JLabel lblIndiqueOEvento = new JLabel("Indique o Evento");
 		lblIndiqueOEvento.setForeground(UIManager.getColor("Button.disabledShadow"));
 		lblIndiqueOEvento.setFont(new Font("Tahoma", Font.BOLD, 16));
+		
+		JLabel bntAtracoes = new JLabel("");
+		bntAtracoes.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent arg0) {
+				bntAtracoes.setIcon(new ImageIcon(PrincipalUI.class.getResource("/img/icon-atracao2.png")));
+				GerenciamentoDeAtracao gAtracao = new GerenciamentoDeAtracao((Evento)comboBox.getSelectedItem());
+				gAtracao.setLocationRelativeTo(null);
+				gAtracao.setVisible(true);
+			}
+			
+		});
+		
+		JLabel btnRelatorio = new JLabel("");
+		btnRelatorio.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				btnRelatorio.setIcon(new ImageIcon(PrincipalUI.class.getResource("/img/icon-relatorio2.png")));
+				RelatorioUI relatorio = new RelatorioUI();
+				relatorio.setLocationRelativeTo(null);
+				relatorio.setVisible(true);
+				
+			}
+			
+			
+			
+		
+		});
+		btnRelatorio.setIcon(new ImageIcon(PrincipalUI.class.getResource("/img/icon-relatorio.png")));
+		
 		
 		
 		
@@ -147,33 +177,46 @@ public class PrincipalUI extends JFrame {
 							.addGap(18)
 							.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, 220, GroupLayout.PREFERRED_SIZE))
 						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(labelFolder, GroupLayout.PREFERRED_SIZE, 690, GroupLayout.PREFERRED_SIZE)
+							.addContainerGap()
+							.addComponent(labelFolder, GroupLayout.PREFERRED_SIZE, 678, GroupLayout.PREFERRED_SIZE)
 							.addGap(18)
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addComponent(btnRelatorio, GroupLayout.PREFERRED_SIZE, 65, GroupLayout.PREFERRED_SIZE)
+								.addComponent(bntAtracoes, GroupLayout.PREFERRED_SIZE, 65, GroupLayout.PREFERRED_SIZE)
 								.addComponent(bntGerenciamentoVisitante, GroupLayout.PREFERRED_SIZE, 65, GroupLayout.PREFERRED_SIZE)
 								.addComponent(bntGerenciamentoEvento))))
-					.addContainerGap(11, Short.MAX_VALUE))
+					.addContainerGap(13, Short.MAX_VALUE))
 		);
 		gl_contentPane.setVerticalGroup(
-			gl_contentPane.createParallelGroup(Alignment.TRAILING)
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblIndiqueOEvento, GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
 						.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE))
 					.addGap(18)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
-						.addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup()
-							.addComponent(bntGerenciamentoEvento)
-							.addGap(18)
-							.addComponent(bntGerenciamentoVisitante, GroupLayout.PREFERRED_SIZE, 65, GroupLayout.PREFERRED_SIZE))
-						.addComponent(labelFolder, GroupLayout.PREFERRED_SIZE, 435, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap())
+					.addComponent(labelFolder, GroupLayout.PREFERRED_SIZE, 435, GroupLayout.PREFERRED_SIZE)
+					.addGap(32))
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGap(105)
+					.addComponent(bntGerenciamentoEvento)
+					.addGap(18)
+					.addComponent(bntGerenciamentoVisitante, GroupLayout.PREFERRED_SIZE, 65, GroupLayout.PREFERRED_SIZE)
+					.addGap(18)
+					.addComponent(bntAtracoes, GroupLayout.PREFERRED_SIZE, 65, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(btnRelatorio, GroupLayout.PREFERRED_SIZE, 65, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(119, Short.MAX_VALUE))
 		);
 		
 		this.addWindowListener(new WindowAdapter() {
 			 public void windowActivated(WindowEvent e) {
 				addComboBox();
+				bntGerenciamentoVisitante.setIcon(new ImageIcon(PrincipalUI.class.getResource("/img/icon-visitante.png")));
+				bntGerenciamentoEvento.setIcon(new ImageIcon(PrincipalUI.class.getResource("/img/icon-evento.png")));
+				bntAtracoes.setIcon(new ImageIcon(PrincipalUI.class.getResource("/img/icon-atracao.png")));
+				btnRelatorio.setIcon(new ImageIcon(PrincipalUI.class.getResource("/img/icon-relatorio.png")));
+				
 			 }
 		 });
 		

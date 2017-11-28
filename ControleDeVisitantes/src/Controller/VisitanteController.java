@@ -47,6 +47,12 @@ public class VisitanteController {
 		VisitanteDAO.instanciaSingleton().excluir(visitante.getId());
 	}
 	
+	public List<Visitante> listarPorArea(String area){
+		return VisitanteDAO.instanciaSingleton().listaPorArea(area);
+		
+	}
+
+	
 	
 	
 	

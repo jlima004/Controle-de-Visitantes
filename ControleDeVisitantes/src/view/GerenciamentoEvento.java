@@ -27,6 +27,8 @@ import java.awt.event.WindowEvent;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
 import javax.swing.border.TitledBorder;
+import javax.swing.JLabel;
+import java.awt.Font;
 
 public class GerenciamentoEvento extends JDialog {
 	private JTable table_1;
@@ -56,6 +58,10 @@ public class GerenciamentoEvento extends JDialog {
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(112, 128, 144));
 		panel.setBorder(new TitledBorder(null, "Lista Eventos", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		
+		JLabel lblNewLabel = new JLabel("Gerenciamento de Eventos");
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 39));
+		lblNewLabel.setForeground(Color.WHITE);
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -63,13 +69,19 @@ public class GerenciamentoEvento extends JDialog {
 					.addContainerGap()
 					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 767, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap(16, Short.MAX_VALUE))
+				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+					.addContainerGap(114, Short.MAX_VALUE)
+					.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 636, GroupLayout.PREFERRED_SIZE)
+					.addGap(43))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.TRAILING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap(148, Short.MAX_VALUE)
-					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 345, GroupLayout.PREFERRED_SIZE)
-					.addGap(49))
+					.addContainerGap(29, Short.MAX_VALUE)
+					.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 92, GroupLayout.PREFERRED_SIZE)
+					.addGap(15)
+					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 376, GroupLayout.PREFERRED_SIZE)
+					.addGap(30))
 		);
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -101,7 +113,7 @@ public class GerenciamentoEvento extends JDialog {
 			}
 		});
 		
-		JButton btnRemover = new JButton("Remover");
+		JButton btnRemover = new JButton("Excluir");
 		btnRemover.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
@@ -125,26 +137,27 @@ public class GerenciamentoEvento extends JDialog {
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 767, Short.MAX_VALUE)
 				.addGroup(gl_panel.createSequentialGroup()
-					.addGap(21)
-					.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 99, GroupLayout.PREFERRED_SIZE)
-					.addGap(18)
-					.addComponent(btnEditar, GroupLayout.PREFERRED_SIZE, 99, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(btnRemover, GroupLayout.PREFERRED_SIZE, 99, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(421, Short.MAX_VALUE))
+					.addGap(22)
+					.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 71, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(btnEditar, GroupLayout.PREFERRED_SIZE, 81, GroupLayout.PREFERRED_SIZE)
+					.addGap(4)
+					.addComponent(btnRemover, GroupLayout.PREFERRED_SIZE, 79, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(492, Short.MAX_VALUE))
+				.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 755, Short.MAX_VALUE)
 		);
 		gl_panel.setVerticalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup()
-					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 269, GroupLayout.PREFERRED_SIZE)
-					.addGap(18)
-					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnEditar, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnRemover, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(13, Short.MAX_VALUE))
+				.addGroup(Alignment.TRAILING, gl_panel.createSequentialGroup()
+					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 297, GroupLayout.PREFERRED_SIZE)
+					.addGap(15)
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+							.addComponent(btnEditar)
+							.addComponent(btnNewButton))
+						.addComponent(btnRemover, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE))
+					.addGap(15))
 		);
 		
 		

@@ -19,7 +19,7 @@ public class Evento {
 	private String areaRelacionada;
 	
 	private ArrayList<Visitante> visitantes = new ArrayList<>();
-	private ArrayList<Evento> eventos = new ArrayList<>();
+	private ArrayList<Atracao> atracoes = new ArrayList<>();
 	
 	
 	@Override
@@ -84,13 +84,17 @@ public class Evento {
 	public void setVisitantes(List<Visitante> list) {
 		this.visitantes = (ArrayList<Visitante>) list;
 	}
-	public ArrayList<Evento> getEventos() {
-		return eventos;
+
+
+	public ArrayList<Atracao> getAtracoes() {
+		return atracoes;
 	}
-	public void setEventos(ArrayList<Evento> eventos) {
-		this.eventos = eventos;
+
+
+	public void setAtracoes(ArrayList<Atracao> atracoes) {
+		this.atracoes = atracoes;
 	}
-	
+
 	
 	
 	

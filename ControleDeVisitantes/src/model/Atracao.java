@@ -1,14 +1,18 @@
 package model;
 
-import java.time.LocalDate;
+import java.sql.Date;
+import java.sql.Time;
+
 
 public class Atracao {
 	
 	private String nome;
-	private LocalDate data;
-	private LocalDate horaInicio;
-	private LocalDate horarioTermino;
-	private String tipo;
+	private int id;
+	private Date data;
+	private Time horaInicio;
+	private Time horarioTermino;
+	private String descricao;
+	private int idEvento;
 	
 	
 	
@@ -18,30 +22,46 @@ public class Atracao {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	public LocalDate getData() {
+	
+	public Date getData() {
 		return data;
 	}
-	public void setData(LocalDate data) {
+	public void setData(Date data) {
 		this.data = data;
 	}
-	public LocalDate getHoraInicio() {
+	public Time getHoraInicio() {
 		return horaInicio;
 	}
-	public void setHoraInicio(LocalDate horaInicio) {
+	public void setHoraInicio(Time horaInicio) {
 		this.horaInicio = horaInicio;
 	}
-	public LocalDate getHorarioTermino() {
+	public Time getHorarioTermino() {
 		return horarioTermino;
 	}
-	public void setHorarioTermino(LocalDate horarioTermino) {
+	public void setHorarioTermino(Time horarioTermino) {
 		this.horarioTermino = horarioTermino;
 	}
-	public String getTipo() {
-		return tipo;
+	public String getDescricao() {
+		return descricao;
 	}
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
 	}
+	public int getIdEvento() {
+		return idEvento;
+	}
+	public void setIdEvento(int idEvento) {
+		this.idEvento = idEvento;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	
+
+	
 	
 	
 
