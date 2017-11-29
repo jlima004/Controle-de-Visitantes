@@ -51,7 +51,9 @@ public class CadastroEventosUI extends JDialog {
 	private JTextField txtfHoraInicio;
 	private JTextField txtfHoraTermino;
 	private JTextField txtfNomeResponsavel;
-	private JTextField txtfAreaRelacionada;
+	
+	JComboBox<String> boxArea = new JComboBox<String>();
+	
 	
 	private Evento eventoParaEdicao;
 	
@@ -83,7 +85,7 @@ public class CadastroEventosUI extends JDialog {
 		setResizable(false);
 		setModal(true);
 		setTitle("Cadastrar Evento");
-		setBounds(100, 100, 562, 355);
+		setBounds(100, 100, 562, 316);
 		
 		
 		
@@ -122,8 +124,8 @@ public class CadastroEventosUI extends JDialog {
 		
 		JLabel lblAreaRelacionada = new JLabel("Area Relacionada");
 		
-		txtfAreaRelacionada = new JTextField();
-		txtfAreaRelacionada.setColumns(10);
+		
+		boxArea.setModel(new DefaultComboBoxModel(new String[] {"Selecione","Programação de Jogos","Analise e Desenvolvimento de Sistemas","Automação Indutrial","Literaria","Design","Animação","Outras"}));
 		
 		JButton btnCadastrar = new JButton("Cadastrar");
 		btnCadastrar.addActionListener(new ActionListener() {
@@ -144,7 +146,7 @@ public class CadastroEventosUI extends JDialog {
 					
 					
 						evento.setResponsavel(txtfNomeResponsavel.getText());
-						evento.setAreaRelacionada(txtfAreaRelacionada.getText());
+						evento.setAreaRelacionada(boxArea.getSelectedItem().toString());
 					
 					new EventoController().salvar(evento);
 					} catch (Exception e) {
@@ -164,7 +166,7 @@ public class CadastroEventosUI extends JDialog {
 						e.printStackTrace();
 					}
 					eventoParaEdicao.setResponsavel(txtfNomeResponsavel.getText());
-					eventoParaEdicao.setAreaRelacionada(txtfAreaRelacionada.getText());
+					eventoParaEdicao.setAreaRelacionada(boxArea.getSelectedItem().toString());
 					
 					new EventoController().editar(eventoParaEdicao);
 					
@@ -181,39 +183,47 @@ public class CadastroEventosUI extends JDialog {
 		
 		
 		
+		
+		
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
-						.addComponent(lblNomeResponsavel)
-						.addComponent(lbDataInicio)
-						.addComponent(lblNomeEvento)
-						.addComponent(lbHoraInicio)
-						.addComponent(lblAreaRelacionada))
-					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_panel.createSequentialGroup()
-							.addComponent(txtfDataInicio, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addGap(18)
-							.addComponent(lblDataTermino)
-							.addPreferredGap(ComponentPlacement.RELATED, 112, Short.MAX_VALUE)
-							.addComponent(txtfDataTermino, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-						.addComponent(txtfNomeEvento, GroupLayout.DEFAULT_SIZE, 366, Short.MAX_VALUE)
-						.addGroup(gl_panel.createSequentialGroup()
-							.addComponent(txtfHoraInicio, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addGap(18)
-							.addComponent(lblHoraTermino)
-							.addPreferredGap(ComponentPlacement.RELATED, 112, Short.MAX_VALUE)
-							.addComponent(txtfHoraTermino, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-						.addComponent(txtfNomeResponsavel, GroupLayout.PREFERRED_SIZE, 299, GroupLayout.PREFERRED_SIZE)
-						.addComponent(txtfAreaRelacionada, 366, 366, 366))
-					.addGap(21))
-				.addGroup(gl_panel.createSequentialGroup()
-					.addGap(209)
-					.addComponent(btnCadastrar)
-					.addContainerGap(208, Short.MAX_VALUE))
+							.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
+								.addComponent(lblNomeResponsavel)
+								.addComponent(lbDataInicio)
+								.addComponent(lblNomeEvento)
+								.addComponent(lbHoraInicio)
+								.addComponent(lblAreaRelacionada))
+							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_panel.createSequentialGroup()
+									.addPreferredGap(ComponentPlacement.UNRELATED)
+									.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+										.addGroup(gl_panel.createSequentialGroup()
+											.addComponent(txtfDataInicio, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+											.addGap(18)
+											.addComponent(lblDataTermino)
+											.addPreferredGap(ComponentPlacement.RELATED, 137, Short.MAX_VALUE)
+											.addComponent(txtfDataTermino, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+										.addComponent(txtfNomeEvento, GroupLayout.DEFAULT_SIZE, 391, Short.MAX_VALUE)
+										.addGroup(gl_panel.createSequentialGroup()
+											.addComponent(txtfHoraInicio, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+											.addGap(18)
+											.addComponent(lblHoraTermino)
+											.addPreferredGap(ComponentPlacement.RELATED, 137, Short.MAX_VALUE)
+											.addComponent(txtfHoraTermino, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+										.addComponent(txtfNomeResponsavel, GroupLayout.PREFERRED_SIZE, 299, GroupLayout.PREFERRED_SIZE))
+									.addGap(21))
+								.addGroup(gl_panel.createSequentialGroup()
+									.addGap(43)
+									.addComponent(boxArea, GroupLayout.PREFERRED_SIZE, 245, GroupLayout.PREFERRED_SIZE)
+									.addContainerGap())))
+						.addGroup(Alignment.TRAILING, gl_panel.createSequentialGroup()
+							.addComponent(btnCadastrar)
+							.addGap(210))))
 		);
 		gl_panel.setVerticalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
@@ -241,16 +251,16 @@ public class CadastroEventosUI extends JDialog {
 					.addGap(26)
 					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblAreaRelacionada)
-						.addComponent(txtfAreaRelacionada, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(52)
+						.addComponent(boxArea, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGap(28)
 					.addComponent(btnCadastrar)
-					.addGap(147))
+					.addGap(31))
 		);
 		panel.setLayout(gl_panel);
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.TRAILING)
-				.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
 					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 523, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap(23, Short.MAX_VALUE))
@@ -259,8 +269,8 @@ public class CadastroEventosUI extends JDialog {
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGap(21)
-					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 293, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(13, Short.MAX_VALUE))
+					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 266, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(40, Short.MAX_VALUE))
 		);
 		getContentPane().setLayout(groupLayout);
 	}
@@ -282,12 +292,9 @@ public class CadastroEventosUI extends JDialog {
 			txtfHoraInicio.setText(String.valueOf(sph.format(eventoParaEdicao.getHoraInicio())));
 			txtfHoraTermino.setText(String.valueOf(sph.format(eventoParaEdicao.getHoraTermino())));
 			txtfNomeResponsavel.setText(eventoParaEdicao.getResponsavel());
-			txtfAreaRelacionada.setText(eventoParaEdicao.getAreaRelacionada());
+			boxArea.setSelectedItem(eventoParaEdicao.getAreaRelacionada());
 		}
 		
 		
 	}
-	
-
-	
 }

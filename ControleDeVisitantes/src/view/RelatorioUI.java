@@ -48,7 +48,7 @@ public class RelatorioUI extends JDialog {
 	
 	private List<Visitante> visitantes;
 	ArrayList<Evento> lista = new ArrayList<>();
-	JComboBox comboBox;
+	JComboBox<String> boxArea = new JComboBox<String>();
 
 	private JTable table_1;
 	private JTextField txtfTotal;
@@ -82,8 +82,8 @@ public class RelatorioUI extends JDialog {
 		panel.setBorder(
 				new TitledBorder(UIManager.getBorder("TitledBorder.border"), "", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		
-		comboBox = new JComboBox();
-		addComboBox();
+		boxArea.setModel(new DefaultComboBoxModel(new String[] {"Selecione","Programação de Jogos","Analise e Desenvolvimento de Sistemas","Automação Indutrial","Literaria","Design","Animação","Outras"}));
+		
 		
 		
 		JLabel lblSelecioneArea = new JLabel("Selecione Area ");
@@ -122,7 +122,7 @@ public class RelatorioUI extends JDialog {
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, 180, GroupLayout.PREFERRED_SIZE)
+							.addComponent(boxArea, GroupLayout.PREFERRED_SIZE, 180, GroupLayout.PREFERRED_SIZE)
 							.addGap(36)
 							.addComponent(btnExibir))
 						.addComponent(txtfTotal, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE))
@@ -134,7 +134,7 @@ public class RelatorioUI extends JDialog {
 					.addGap(46)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblSelecioneArea, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
-						.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(boxArea, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(btnExibir))
 					.addPreferredGap(ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
@@ -188,35 +188,14 @@ public class RelatorioUI extends JDialog {
 		
 		
 	}
-	public void addComboBox(){
-		 lista = (ArrayList<Evento>) new EventoDAO().listaEvento();
-		 	
-		 DefaultComboBoxModel<String> modelEvento = new DefaultComboBoxModel<>();
-		 
-		 for (Evento e : lista){
-			
-			 modelEvento.addElement(e.getAreaRelacionada());
-			
-		 }
-		 
-		 
-		 
-		 
-		
-			
-			
-		
-		 
-		 comboBox.setModel(modelEvento);
-	      
-	}
+
 	
 	public void atualizaTable(){
-		VisitanteTableMode model = new VisitanteTableMode(new VisitanteController().listarPorArea(comboBox.getSelectedItem().toString()));
+		VisitanteTableMode model = new VisitanteTableMode(new VisitanteController().listarPorArea(boxArea.getSelectedItem().toString()));
 		table_1.setModel(model);
 		
 	}
 	public int numeroVisitantes(){
-		 return  new VisitanteController().listarPorArea(comboBox.getSelectedItem().toString()).size();
+		 return  new VisitanteController().listarPorArea(boxArea.getSelectedItem().toString()).size();
 	}
 }
