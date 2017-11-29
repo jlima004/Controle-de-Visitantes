@@ -23,6 +23,7 @@ import java.awt.Font;
 import java.awt.Image;
 
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JList;
@@ -109,11 +110,18 @@ public class PrincipalUI extends JFrame {
 		bntGerenciamentoVisitante.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				GerenciamentoVisitanteUI gVisitante = new GerenciamentoVisitanteUI((Evento)comboBox.getSelectedItem());
-				bntGerenciamentoVisitante.setIcon(new ImageIcon(PrincipalUI.class.getResource("/img/icon-visitante2.png")));
-				gVisitante.setLocationRelativeTo(null);
-				gVisitante.setVisible(true);
+				
+				try {
 					
+					GerenciamentoVisitanteUI gVisitante = new GerenciamentoVisitanteUI((Evento)comboBox.getSelectedItem());
+					bntGerenciamentoVisitante.setIcon(new ImageIcon(PrincipalUI.class.getResource("/img/icon-visitante2.png")));
+					gVisitante.setLocationRelativeTo(null);
+					gVisitante.setVisible(true);
+					
+				} catch (NullPointerException error) {
+					JOptionPane.showMessageDialog(null, "Para cadastrar um visitante é necessário ter pelo menos um evento cadastrado");
+				}
+				
 			}
 		});
 		
@@ -133,10 +141,18 @@ public class PrincipalUI extends JFrame {
 		bntAtracoes.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent arg0) {
-				bntAtracoes.setIcon(new ImageIcon(PrincipalUI.class.getResource("/img/icon-atracao2.png")));
-				GerenciamentoDeAtracao gAtracao = new GerenciamentoDeAtracao((Evento)comboBox.getSelectedItem());
-				gAtracao.setLocationRelativeTo(null);
-				gAtracao.setVisible(true);
+				
+				try {
+					
+					bntAtracoes.setIcon(new ImageIcon(PrincipalUI.class.getResource("/img/icon-atracao2.png")));
+					GerenciamentoDeAtracao gAtracao = new GerenciamentoDeAtracao((Evento)comboBox.getSelectedItem());
+					gAtracao.setLocationRelativeTo(null);
+					gAtracao.setVisible(true);
+					
+				} catch (NullPointerException error) {
+					JOptionPane.showMessageDialog(null, "Para cadastrar uma atração é necessário ter pelo menos uma atração cadastrada");
+				}
+				
 			}
 			
 		});
