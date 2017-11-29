@@ -199,9 +199,16 @@ public class CadastroVisitanteUI extends JDialog {
 					visitanteParaEdicao.setSexo(cbSexo.getSelectedItem().toString());
 					visitanteParaEdicao.setTelefone(txtfTelefone.getText());
 					
-					new VisitanteController().editar(visitanteParaEdicao);
+					try {
+						new VisitanteController().editar(visitanteParaEdicao);
+						JOptionPane.showMessageDialog(null, "Visitante Editado com sucesso!!");
+						dispose();
+					} catch (Exception e) {
+						JOptionPane.showMessageDialog(null, e.getMessage());
+						//e.printStackTrace();
+					}
 					
-					JOptionPane.showMessageDialog(null, "Visitante Editado com sucesso!!");
+					
 					
 				}
 				
