@@ -180,13 +180,16 @@ public class CadastroVisitanteUI extends JDialog {
 					
 					try {
 						new VisitanteController().salvar(visitante);
+						
+						JOptionPane.showMessageDialog(null, "Cadastrado com Sucesso!!");
+						dispose();
 					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+						JOptionPane.showMessageDialog(null, e.getMessage());
+						//e.printStackTrace();
 					}
 					
 					
-					JOptionPane.showMessageDialog(null, "Cadastrado com Sucesso!!");
+					
 					
 				} else {
 					
@@ -202,7 +205,7 @@ public class CadastroVisitanteUI extends JDialog {
 					
 				}
 				
-				dispose();
+				
 				
 			}
 		});

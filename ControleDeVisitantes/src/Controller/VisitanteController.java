@@ -10,8 +10,11 @@ import model.Visitante;
 public class VisitanteController {
 
 	public void salvar(Visitante visitante) throws Exception {
+		
+		String msg = "";
+		
 		if (visitante.getNome().trim().equals("") || visitante.getNome().trim().length() < 3) {
-			throw new Exception("Nome inválido");
+			msg += "Nome inválido\n";
 		}
 
 		String email = visitante.getEmail();
@@ -22,12 +25,16 @@ public class VisitanteController {
 		Matcher m = p.matcher(email);
 
 		if (!m.matches()) {
-			throw new Exception("Email inválido");
+			msg += "Email inválido\n";
 		}
 		if (visitante.getSexo().trim().equals("Selecione")) {
-			throw new Exception("Sexo inválido");
+			msg += "Sexo inválido\n";
 		}
-
+		
+		if(!msg.equals("")) {
+			throw new Exception(msg);
+		}
+		
 		VisitanteDAO.instanciaSingleton().salvar(visitante);
 	}
 
