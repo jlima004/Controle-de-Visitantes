@@ -27,6 +27,17 @@ public class VisitanteController {
 		if (!m.matches()) {
 			msg += "Email inválido\n";
 		}
+
+		String telefone = visitante.getTelefone();
+		String regex = "^[0-9]{9}";
+
+		Pattern pat = Pattern.compile(regex);
+		Matcher mt = pat.matcher(telefone);
+
+		if (!mt.matches()) {
+			msg += "Telefone inválido\n";
+		}
+
 		if (visitante.getSexo().trim().equals("Selecione")) {
 			msg += "Sexo inválido\n";
 		}
@@ -60,6 +71,16 @@ public class VisitanteController {
 		Pattern p = Pattern.compile(emailPattern);
 
 		Matcher m = p.matcher(email);
+		
+		String telefone = visitante.getTelefone();
+		String regex = "^[0-9]{9}";
+
+		Pattern pat = Pattern.compile(regex);
+		Matcher mt = pat.matcher(telefone);
+
+		if (!mt.matches()) {
+			msg += "Telefone inválido\n";
+		}
 
 		if (!m.matches()) {
 			msg += "Email inválido\n";
