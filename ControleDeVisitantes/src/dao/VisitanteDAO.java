@@ -160,7 +160,7 @@ public class VisitanteDAO {
 
 	}
 	
-	
+	/*
 	public List<Visitante> listaPorArea(String area){
 		try {
 			listaVisitantes = new ArrayList<>();
@@ -192,7 +192,7 @@ public class VisitanteDAO {
 			
 	}
 	
-	
+	*/
 
 	
 	

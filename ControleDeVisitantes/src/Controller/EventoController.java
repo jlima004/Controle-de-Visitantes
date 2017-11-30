@@ -8,7 +8,16 @@ import model.Evento;
 public class EventoController {
 	
 	
-	public void salvar(Evento evento){
+	public void salvar(Evento evento) throws Exception{
+		String msg = "";
+
+		if (evento.getNome().trim().equals("") ) {
+			msg += "Nome inválido\n";
+		}
+		if(!msg.equals("")){
+			throw new Exception(msg);
+		}
+		
 		EventoDAO.instanciaSingleton().salvar(evento);
 	}
 	

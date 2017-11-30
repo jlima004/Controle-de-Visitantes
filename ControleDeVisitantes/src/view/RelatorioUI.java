@@ -16,6 +16,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import Controller.EventoController;
+import Controller.RelatorioController;
 import Controller.VisitanteController;
 import dao.EventoDAO;
 import dao.VisitanteDAO;
@@ -52,6 +53,7 @@ public class RelatorioUI extends JDialog {
 
 	private JTable table_1;
 	private JTextField txtfTotal;
+	private JTextField txtfTotalEventos;
 	
 
 	/**
@@ -96,10 +98,12 @@ public class RelatorioUI extends JDialog {
 				atualizaTable();
 				 numeroVisitantes();
 				  txtfTotal.setText(String.valueOf(numeroVisitantes()));
+				  numeroDeEventos();
+				  txtfTotalEventos.setText(String.valueOf(numeroDeEventos()));
 			}
 		});
 		
-		JLabel lblTotalDeVisitantes = new JLabel("Total de Visitantes Pela \u00C1rea");
+		JLabel lblTotalDeVisitantes = new JLabel("Total de Visitantes Desta \u00C1rea");
 		lblTotalDeVisitantes.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblTotalDeVisitantes.setForeground(Color.WHITE);
 		
@@ -107,6 +111,14 @@ public class RelatorioUI extends JDialog {
 		txtfTotal.setEditable(false);
 		txtfTotal.setText(String.valueOf(numeroVisitantes()));
 		txtfTotal.setColumns(10);
+		
+		JLabel lbtotalEventos = new JLabel("Total de Eventos  Desta \u00C1rea");
+		lbtotalEventos.setForeground(Color.WHITE);
+		lbtotalEventos.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		
+		txtfTotalEventos = new JTextField();
+		txtfTotalEventos.setEditable(false);
+		txtfTotalEventos.setColumns(10);
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -115,18 +127,28 @@ public class RelatorioUI extends JDialog {
 					.addComponent(panel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 					.addGap(8))
 				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(106)
-					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-						.addComponent(lblTotalDeVisitantes)
-						.addComponent(lblSelecioneArea, GroupLayout.PREFERRED_SIZE, 92, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(200)
+							.addComponent(lblSelecioneArea, GroupLayout.PREFERRED_SIZE, 92, GroupLayout.PREFERRED_SIZE))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(62)
+							.addComponent(lbtotalEventos, GroupLayout.PREFERRED_SIZE, 222, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(txtfTotalEventos, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)))
+					.addGap(14)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addPreferredGap(ComponentPlacement.UNRELATED)
 							.addComponent(boxArea, GroupLayout.PREFERRED_SIZE, 180, GroupLayout.PREFERRED_SIZE)
 							.addGap(36)
 							.addComponent(btnExibir))
-						.addComponent(txtfTotal, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(216, Short.MAX_VALUE))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(52)
+							.addComponent(lblTotalDeVisitantes)
+							.addGap(18)
+							.addComponent(txtfTotal, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap(142, Short.MAX_VALUE))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -136,8 +158,10 @@ public class RelatorioUI extends JDialog {
 						.addComponent(lblSelecioneArea, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
 						.addComponent(boxArea, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(btnExibir))
-					.addPreferredGap(ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(txtfTotalEventos, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lbtotalEventos, GroupLayout.PREFERRED_SIZE, 19, GroupLayout.PREFERRED_SIZE)
 						.addComponent(lblTotalDeVisitantes)
 						.addComponent(txtfTotal, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addGap(18)
@@ -176,8 +200,9 @@ public class RelatorioUI extends JDialog {
 			 public void windowActivated(WindowEvent e) {
 				  atualizaTable();
 				  numeroVisitantes();
+				  numeroDeEventos();
 				  txtfTotal.setText(String.valueOf(numeroVisitantes()));
-					
+				  txtfTotalEventos.setText(String.valueOf(numeroDeEventos()));
 			      }
 		 });
 		
@@ -191,11 +216,15 @@ public class RelatorioUI extends JDialog {
 
 	
 	public void atualizaTable(){
-		VisitanteTableMode model = new VisitanteTableMode(new VisitanteController().listarPorArea(boxArea.getSelectedItem().toString()));
+		VisitanteTableMode model = new VisitanteTableMode(new RelatorioController().listarPorArea(boxArea.getSelectedItem().toString()));
 		table_1.setModel(model);
 		
 	}
 	public int numeroVisitantes(){
-		 return  new VisitanteController().listarPorArea(boxArea.getSelectedItem().toString()).size();
+		 return  new RelatorioController().listarPorArea(boxArea.getSelectedItem().toString()).size();
+	}
+	
+	public int numeroDeEventos(){
+		return new RelatorioController().totalEventos(boxArea.getSelectedItem().toString());
 	}
 }

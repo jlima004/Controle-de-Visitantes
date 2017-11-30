@@ -60,7 +60,7 @@ public class GerenciamentoVisitanteUI extends JDialog {
 	 */
 	public GerenciamentoVisitanteUI(Evento eventoObject) {
 		setEventoObject(eventoObject);
-		System.out.println("GERENCIAMENTO "+getEventoObject().getNome());
+		
 		getContentPane().setBackground(new Color(112, 128, 144));
 		setModal(true);
 		setTitle("Gerenciamento de Visitantes");
@@ -123,7 +123,7 @@ public class GerenciamentoVisitanteUI extends JDialog {
 				CadastroVisitanteUI cadVisitante = new CadastroVisitanteUI(getEventoObject());
 				cadVisitante.setLocationRelativeTo(null);
 				cadVisitante.setVisible(true);
-				//cadVisitante.setIdEventoCad(idEventoGere);
+				
 				
 				
 			}
