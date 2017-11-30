@@ -15,6 +15,10 @@ public class Relatorio {
 	public void setNumeroVisitantes(int numeroVisitantes) {
 		this.numeroVisitantes = numeroVisitantes;
 	}
+
+
+	
+	
 	
 	
 	

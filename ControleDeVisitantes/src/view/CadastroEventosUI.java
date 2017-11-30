@@ -149,11 +149,12 @@ public class CadastroEventosUI extends JDialog {
 						evento.setAreaRelacionada(boxArea.getSelectedItem().toString());
 					
 					new EventoController().salvar(evento);
+					JOptionPane.showMessageDialog(null, "Cadastrado com Sucesso!!");
 					} catch (Exception e) {
-						// TODO: handle exception
+						JOptionPane.showMessageDialog(null, e.getMessage());
 					}
 					
-					JOptionPane.showMessageDialog(null, "Cadastrado com Sucesso!!");
+					
 				}else{
 					eventoParaEdicao.setNome(txtfNomeEvento.getText());
 					try {
@@ -163,7 +164,7 @@ public class CadastroEventosUI extends JDialog {
 						eventoParaEdicao.setHoraTermino(new Time(sph.parse(txtfHoraTermino.getText()).getTime()));
 					} catch (ParseException e) {
 						// TODO Auto-generated catch block
-						e.printStackTrace();
+						
 					}
 					eventoParaEdicao.setResponsavel(txtfNomeResponsavel.getText());
 					eventoParaEdicao.setAreaRelacionada(boxArea.getSelectedItem().toString());

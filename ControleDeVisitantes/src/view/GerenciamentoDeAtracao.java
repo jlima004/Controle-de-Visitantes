@@ -67,7 +67,6 @@ public class GerenciamentoDeAtracao extends JDialog {
 	 */
 	public GerenciamentoDeAtracao(Evento eventoObject) {
 		setEventoObject(eventoObject);
-		System.out.println("GERENCIAMENTO "+getEventoObject().getNome());
 		getContentPane().setBackground(new Color(112, 128, 144));
 		setModal(true);
 		setTitle("Gerenciamento de Visitantes");
