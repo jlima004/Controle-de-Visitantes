@@ -12,7 +12,6 @@ public class EventoController {
 		EventoDAO.instanciaSingleton().salvar(evento);
 	}
 	
-	
 	public List<Evento> listar(){
 		return EventoDAO.instanciaSingleton().listaEvento();
 	}
@@ -24,7 +23,5 @@ public class EventoController {
 	public void remover(Evento evento){
 		EventoDAO.instanciaSingleton().excluir(evento.getId());
 	}
-	
-	
 
 }
