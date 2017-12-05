@@ -45,8 +45,8 @@ public class AtracaoTableMode extends AbstractTableModel {
 	public String getColumnName(int colum){
 		if(colum == COL_NOME)return "Nome";
 		if(colum== COL_DATA)return "Data";
-		if(colum==COL_HORA_INICIO)return "Hora inicio";
-		if(colum == COL_HORA_FIM)return "Hora termino";
+		if(colum==COL_HORA_INICIO)return "Hora início";
+		if(colum == COL_HORA_FIM)return "Hora término";
 		if(colum == COL_DESCRICAO)return "Descrição";
 		
 		return "";

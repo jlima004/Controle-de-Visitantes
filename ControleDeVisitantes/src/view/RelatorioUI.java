@@ -88,7 +88,7 @@ public class RelatorioUI extends JDialog {
 		
 		
 		
-		JLabel lblSelecioneArea = new JLabel("Selecione Area ");
+		JLabel lblSelecioneArea = new JLabel("Selecione \u00C1rea ");
 		lblSelecioneArea.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblSelecioneArea.setForeground(Color.WHITE);
 		

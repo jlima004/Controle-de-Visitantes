@@ -49,12 +49,12 @@ public class EventoTableMode extends AbstractTableModel {
 	// vai setar o nome da coluna da nossa tabela 
 	public String getColumnName(int colum){
 		if(colum == COL_NOME_EVENTO)return "Nome Evento";
-		if(colum== COL_DATA_INICIO)return "Data de Inicio";
-		if(colum==COL_DATA_TERMINO)return "Data de Termino";
-		if(colum == COL_HORA_INICIO)return "Hora de Inicio";
-		if(colum == COL_HORA_TERMINO)return "Hora de Termino";
-		if(colum == COL_RESPONSAVEL)return "Responsavel";
-		if(colum == COL_AREA)return "Area de Conhecimento";
+		if(colum== COL_DATA_INICIO)return "Data de Início";
+		if(colum==COL_DATA_TERMINO)return "Data de Término";
+		if(colum == COL_HORA_INICIO)return "Hora de Início";
+		if(colum == COL_HORA_TERMINO)return "Hora de Término";
+		if(colum == COL_RESPONSAVEL)return "Responsável";
+		if(colum == COL_AREA)return "Área de Conhecimento";
 		
 		return "";
 	}

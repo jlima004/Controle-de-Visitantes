@@ -97,32 +97,32 @@ public class CadastroEventosUI extends JDialog {
 		txtfNomeEvento = new JTextField();
 		txtfNomeEvento.setColumns(10);
 		
-		JLabel lbDataInicio = new JLabel("Data Inicio");
+		JLabel lbDataInicio = new JLabel("Data In\u00EDcio");
 		
 		txtfDataInicio = new JTextField();
 		txtfDataInicio.setColumns(10);
 		
-		JLabel lblDataTermino = new JLabel("Data Termino");
+		JLabel lblDataTermino = new JLabel("Data T\u00E9rmino");
 		
 		txtfDataTermino = new JTextField();
 		txtfDataTermino.setColumns(10);
 		
-		JLabel lbHoraInicio = new JLabel("Hora Inicio");
+		JLabel lbHoraInicio = new JLabel("Hora In\u00EDcio");
 		
 		txtfHoraInicio = new JTextField();
 		txtfHoraInicio.setColumns(10);
 		
-		JLabel lblHoraTermino = new JLabel("Hora Termino");
+		JLabel lblHoraTermino = new JLabel("Hora T\u00E9rmino");
 		
 		txtfHoraTermino = new JTextField();
 		txtfHoraTermino.setColumns(10);
 		
-		JLabel lblNomeResponsavel = new JLabel("Nome Responsavel");
+		JLabel lblNomeResponsavel = new JLabel("Nome Respons\u00E1vel");
 		
 		txtfNomeResponsavel = new JTextField();
 		txtfNomeResponsavel.setColumns(10);
 		
-		JLabel lblAreaRelacionada = new JLabel("Area Relacionada");
+		JLabel lblAreaRelacionada = new JLabel("\u00C1rea Relacionada");
 		
 		
 		boxArea.setModel(new DefaultComboBoxModel(new String[] {"Selecione","Programação de Jogos","Analise e Desenvolvimento de Sistemas","Automação Indutrial","Literaria","Design","Animação","Outras"}));

@@ -98,12 +98,12 @@ public class CadastroAtracoesUI extends JDialog {
 		txtfData = new JTextField();
 		txtfData.setColumns(10);
 		
-		JLabel lblHoraInicio = new JLabel("Hora Inicio");
+		JLabel lblHoraInicio = new JLabel("Hora In\u00EDcio");
 		
 		txtfHoraInicio = new JTextField();
 		txtfHoraInicio.setColumns(10);
 		
-		JLabel lblHoraTermino = new JLabel("Hora Termino");
+		JLabel lblHoraTermino = new JLabel("Hora T\u00E9rmino");
 		
 		txtfHoraTermino = new JTextField();
 		txtfHoraTermino.setColumns(10);
