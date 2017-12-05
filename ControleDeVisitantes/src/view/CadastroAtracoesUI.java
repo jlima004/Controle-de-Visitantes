@@ -202,12 +202,13 @@ public class CadastroAtracoesUI extends JDialog {
 						atracao.setHoraInicio(new Time(sph.parse(txtfHoraInicio.getText()).getTime()));
 						atracao.setHorarioTermino(new Time(sph.parse(txtfHoraTermino.getText()).getTime()));
 					new AtracaoController().salvar(atracao);
+					JOptionPane.showMessageDialog(null, "Cadastrado com Sucesso!!");
+					dispose();
 					} catch (ParseException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+						JOptionPane.showMessageDialog(null, "Data fora do formato dd/mm/aa");
 					}
 					
-					JOptionPane.showMessageDialog(null, "Cadastrado com Sucesso!!");
+				
 				}else{
 					atracaoParaEdicao.setNome(txtfNomeAtracao.getText());
 					atracaoParaEdicao.setDescricao(txtfDescricao.getText());
@@ -216,12 +217,12 @@ public class CadastroAtracoesUI extends JDialog {
 						atracaoParaEdicao.setHoraInicio(new Time(sph.parse(txtfHoraInicio.getText()).getTime()));
 						atracaoParaEdicao.setHorarioTermino(new Time(sph.parse(txtfHoraTermino.getText()).getTime()));
 						new AtracaoController().editar(atracaoParaEdicao);
+						JOptionPane.showMessageDialog(null, "Atração Editada com sucesso!!");
+						dispose();
 					} catch (ParseException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+						JOptionPane.showMessageDialog(null, "Data fora do formato dd/mm/aa");
 					}
 				}
-				dispose();
 				
 			}
 		});

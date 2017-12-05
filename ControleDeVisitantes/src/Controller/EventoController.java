@@ -11,9 +11,10 @@ public class EventoController {
 	public void salvar(Evento evento) throws Exception{
 		String msg = "";
 
-		if (evento.getNome().trim().equals("") ) {
+		if (evento.getNome().trim().equals("") || evento.getNome().trim().length() < 3 ) {
 			msg += "Nome inválido\n";
 		}
+		
 		if(!msg.equals("")){
 			throw new Exception(msg);
 		}

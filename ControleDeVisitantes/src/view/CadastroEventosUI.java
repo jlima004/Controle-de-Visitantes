@@ -150,8 +150,12 @@ public class CadastroEventosUI extends JDialog {
 					
 					new EventoController().salvar(evento);
 					JOptionPane.showMessageDialog(null, "Cadastrado com Sucesso!!");
+					dispose();
+					} catch (ParseException e) {
+						JOptionPane.showMessageDialog(null, "Data fora do formato dd/mm/aa");
 					} catch (Exception e) {
 						JOptionPane.showMessageDialog(null, e.getMessage());
+						
 					}
 					
 					
@@ -162,22 +166,21 @@ public class CadastroEventosUI extends JDialog {
 						eventoParaEdicao.setDataTermino(new Date(sp.parse(txtfDataTermino.getText()).getTime()));
 						eventoParaEdicao.setHoraInicio(new Time(sph.parse(txtfHoraInicio.getText()).getTime()));
 						eventoParaEdicao.setHoraTermino(new Time(sph.parse(txtfHoraTermino.getText()).getTime()));
+						eventoParaEdicao.setResponsavel(txtfNomeResponsavel.getText());
+						eventoParaEdicao.setAreaRelacionada(boxArea.getSelectedItem().toString());
+						new EventoController().editar(eventoParaEdicao);
+						JOptionPane.showMessageDialog(null, "Evento Editado com sucesso!!");
+						dispose();
 					} catch (ParseException e) {
-						// TODO Auto-generated catch block
-						
+						JOptionPane.showMessageDialog(null, "Data fora do formato dd/mm/aa");
 					}
-					eventoParaEdicao.setResponsavel(txtfNomeResponsavel.getText());
-					eventoParaEdicao.setAreaRelacionada(boxArea.getSelectedItem().toString());
 					
-					new EventoController().editar(eventoParaEdicao);
-					
-					JOptionPane.showMessageDialog(null, "Evento Editado com sucesso!!");
 					
 					
 					
 				}
 				
-				dispose();
+				
 				
 			}
 		});

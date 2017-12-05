@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.Evento;
-import model.Relatorio;
+
 import model.Visitante;
 import utill.ConnectionUtil;
 
